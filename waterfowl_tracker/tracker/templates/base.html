@@ -89,15 +89,6 @@
                 <span class="d-none d-sm-inline mx-1 nav-link profile-link">{{ user.get_username }}</span>
                 </a>
               </li>
-              <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
-              {% else %}
-              <li>
-                <a href="{% url 'login'%}?next={{request.path}}" class="nav-link px-0 align-middle">
-                  <i class="fa-solid fa-arrow-right-to-bracket"></i> <span
-                    class="ms-1 d-none d-sm-inline">Login</span></a>
-              </li>
-              {% endif %}
-              <hr class='hrClass'>
               <li>
                 <a href="#" class="nav-link px-0 align-middle profile-link">
                   <i class="fa-solid fa-address-card"></i> <span class="ms-1 d-none d-sm-inline">Profile</span></a>
@@ -112,10 +103,18 @@
                     class="ms-1 d-none d-sm-inline">Alerts</span></a>
               </li>
               <li>
-                <a href="#" class="nav-link px-0 align-middle profile-link">
+                <a href="{% url 'logout'%}?next={{request.path}}" class="nav-link px-0 align-middle profile-link">
                   <i class="fa-solid fa-arrow-right-from-bracket"></i> <span
                     class="ms-1 d-none d-sm-inline">Logout</span></a>
               </li>
+              {% else %}
+              <li>
+                <a href="{% url 'login'%}?next={{request.path}}" class="nav-link px-0 align-middle">
+                  <i class="fa-solid fa-arrow-right-to-bracket"></i> <span
+                    class="ms-1 d-none d-sm-inline">Login</span></a>
+              </li>
+              {% endif %}
+              <hr class='hrClass'>
             </ul>
           </div>
         </div>
