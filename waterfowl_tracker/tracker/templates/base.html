@@ -87,7 +87,7 @@
               {% if user.is_authenticated %}
               <hr class='hrClass'>
               <li class='profile-link' style="padding-top:8px;">
-                <img src="{{ profile.get_avatar }}" alt="hugenerd" width="30" height="30" class="rounded-circle">
+                <img src="{{ request.user.profile.get_avatar }}" alt="hugenerd" width="30" height="30" class="rounded-circle">
                 <span class="d-none d-sm-inline mx-1 nav-link profile-link">{{ user.get_username }}</span>
                 </a>
               </li>
