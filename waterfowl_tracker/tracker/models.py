@@ -8,10 +8,8 @@ intType = [
 
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name="profile", on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to="tracker/profiles/avatars/", null=True, blank=True)
+    avatar = models.ImageField(upload_to="profiles/avatars/", null=True, blank=True)
     company = models.CharField(max_length=100, null=True, blank=True)
-    phone = models.CharField(max_length=32, null=True, blank=True)
-    address = models.CharField(max_length=255, null=True, blank=True)
 
     class Meta:
         verbose_name = 'Profile'
