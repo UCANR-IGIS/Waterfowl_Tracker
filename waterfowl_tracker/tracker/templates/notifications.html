@@ -7,8 +7,8 @@
     <div class='row gx-0'>
         <div class='col'>
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                <label class="form-check-label" for="flexSwitchCheckDefault">Email Alerts</label>
+                <input class="form-check-input" type="checkbox" value="{{ notification.alerts }}" id="alerts">
+                <label class="form-check-label" for="alerts">Email Alerts</label>
             </div>
         </div>
     </div>
@@ -20,20 +20,23 @@
                 </div>
                 <div class="card-body">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" value="{{ notification.low_dens }}"
+                            id="low_dens">
+                        <label class="form-check-label" for="low_dens">
                             Low Density
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" value="{{ notification.med_dens }}"
+                            id="med_dens">
+                        <label class="form-check-label" for="med_dens">
                             Medium Density
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" value="{{ notification.high_dens }}"
+                            id="high_dens">
+                        <label class="form-check-label" for="high_dens">
                             High Density
                         </label>
                     </div>
@@ -78,26 +81,26 @@
                 </div>
                 <div class="card-body">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" value="{{ notification.on_prop }}" id="on_prop">
+                        <label class="form-check-label" for="on_prop">
                             On property
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" value="{{ notification.two_km }}" id="two_km">
+                        <label class="form-check-label" for="two_km">
                             2km radius
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" value="{{ notification.five_km }}" id="five_km">
+                        <label class="form-check-label" for="five_km">
                             5km radius
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" value="{{ notification.ten_km }}" id="ten_km">
+                        <label class="form-check-label" for="ten_km">
                             10km radius
                         </label>
                     </div>
@@ -111,8 +114,8 @@
                 </div>
                 <div class="card-body">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" value="{{ notification.farm }}" id="farm">
+                        <label class="form-check-label" for="farm">
                             Farm 1
                         </label>
                     </div>
@@ -122,8 +125,8 @@
     </div>
     <div class='row gx-0'>
         <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-            <label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
+            <input class="form-check-input" value="{{ notification.emails }}" type="checkbox" id="emails">
+            <label class="form-check-label" for="emails">Default switch checkbox input</label>
         </div>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>

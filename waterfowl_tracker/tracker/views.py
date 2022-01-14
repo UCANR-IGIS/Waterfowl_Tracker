@@ -59,6 +59,7 @@ class NotificationView(View):
 
         if form.is_valid():
             notification = form.save()
+            notification.save()
 
             messages.success(request, 'Notification saved successfully')
         else:
