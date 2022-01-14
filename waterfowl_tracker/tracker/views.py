@@ -68,4 +68,4 @@ class NotificationView(View):
             messages.success(request, 'Notification saved successfully')
         else:
             messages.error(request, form_validation_error(form))
-        return redirect('notification')
+        return redirect('notifications')
