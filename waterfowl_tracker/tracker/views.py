@@ -8,12 +8,16 @@ from .forms import ProfileForm, form_validation_error
 from .models import Profile
 
 from .forms import NotificationForm, form_validation_error
-from .models import Notification
+from .models import Notification, FarmLoc
 
 
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
+
+def farms(request):  
+    farms = FarmLoc.objects.all()  
+    return render(request,"farms.html",{'farms':farms})
 
 @method_decorator(login_required(login_url='login'), name='dispatch')
 class ProfileView(View):

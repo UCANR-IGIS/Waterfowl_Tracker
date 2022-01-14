@@ -33,6 +33,10 @@ class FarmLoc(models.Model):
     # GeoDjango-specific: a geometry field
     pnt = models.PointField()
 
+    class Meta:
+        verbose_name = 'Farm'
+        verbose_name_plural = 'Farms'
+
     # Returns the string representation of the model.
     def __str__(self):
         return self.name        
