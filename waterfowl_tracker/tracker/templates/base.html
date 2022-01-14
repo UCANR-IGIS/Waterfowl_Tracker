@@ -87,7 +87,8 @@
               {% if user.is_authenticated %}
               <hr class='hrClass'>
               <li class='profile-link' style="padding-top:8px;">
-                <img src="{{ request.user.profile.get_avatar }}" alt="hugenerd" width="30" height="30" class="rounded-circle">
+                <img src="{{ request.user.profile.get_avatar }}" alt="hugenerd" width="30" height="30"
+                  class="rounded-circle">
                 <span class="d-none d-sm-inline mx-1 nav-link profile-link">{{ user.get_username }}</span>
                 </a>
               </li>
@@ -100,7 +101,7 @@
                   <i class="fa-solid fa-farm"></i> <span class="ms-1 d-none d-sm-inline">Farms</span></a>
               </li>
               <li>
-                <a href="#" class="nav-link px-0 align-middle profile-link">
+                <a href="{% url 'notifications'%}" class="nav-link px-0 align-middle profile-link">
                   <i class="fa-solid fa-sensor-triangle-exclamation"></i> <span
                     class="ms-1 d-none d-sm-inline">Alerts</span></a>
               </li>

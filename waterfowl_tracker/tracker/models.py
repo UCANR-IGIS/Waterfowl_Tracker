@@ -38,6 +38,7 @@ class FarmLoc(models.Model):
         return self.name        
 
 class Notification(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     alerts = models.BooleanField('Email Alerts', default=False)
     low_dens = models.BooleanField('Low Density', default=False)
     med_dens = models.BooleanField('Medium Density', default=False)
