@@ -7,6 +7,9 @@ from django.views import View
 from .forms import ProfileForm, form_validation_error
 from .models import Profile
 
+from .forms import NotificationForm, form_validation_error
+from .models import Notification
+
 
 # Create your views here.
 def index(request):
@@ -38,3 +41,26 @@ class ProfileView(View):
         else:
             messages.error(request, form_validation_error(form))
         return redirect('profile')
+
+@method_decorator(login_required(login_url='login'), name='dispatch')
+class NotificationView(View):
+    notification = None
+
+    def dispatch(self, request, *args, **kwargs):
+        self.notification, __ = Notification.objects.get_or_create(owner=request.user)
+        return super(NotificationView, self).dispatch(request, *args, **kwargs)
+
+    def get(self, request):
+        context = {'notification': self.notification, 'segment': 'notification'}
+        return render(request, 'notifications.html', context)
+
+    def post(self, request):
+        form = NotificationForm(request.POST, request.FILES, instance=self.notification)
+
+        if form.is_valid():
+            notification = form.save()
+
+            messages.success(request, 'Notification saved successfully')
+        else:
+            messages.error(request, form_validation_error(form))
+        return redirect('notification')
