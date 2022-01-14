@@ -30,7 +30,7 @@ class FarmLoc(models.Model):
     lat = models.FloatField()
     owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
-    # GeoDjango-specific: a geometry field (MultiPolygonField)
+    # GeoDjango-specific: a geometry field
     pnt = models.PointField()
 
     # Returns the string representation of the model.
