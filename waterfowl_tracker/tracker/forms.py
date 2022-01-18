@@ -1,6 +1,7 @@
 from django import forms
 from .models import Profile
 from .models import Notification
+from .models import FarmLoc
 
 
 class ProfileForm(forms.ModelForm):
@@ -14,23 +15,18 @@ class ProfileForm(forms.ModelForm):
         exclude = ['user']
 
 class NotificationForm(forms.ModelForm):
-    '''alerts = forms.BooleanField()
-    low_dens = forms.BooleanField()
-    med_dens = forms.BooleanField()
-    high_dens = forms.BooleanField()
-    on_prop = forms.BooleanField()
-    two_km = forms.BooleanField()
-    five_km = forms.BooleanField()
-    ten_km = forms.BooleanField()
-    daily = forms.CharField( max_length=50)
-    weekly = forms.CharField(max_length=50)
-    emails = forms.CharField(max_length=250)
-    farm = forms.MultipleChoiceField()'''
-
+    #farmsall = forms.ModelMultipleChoiceField(queryset=FarmLoc.objects.all())
+    #farmsall = forms.ModelMultipleChoiceField(None)
     class Meta:
         model = Notification
         fields = '__all__'
-        exclude = ['user']
+        exclude = ['user']#,'farm']
+
+    #farmsall = forms.ModelMultipleChoiceField(queryset=None)
+
+    #def __init__(self, *args, **kwargs):
+    #    super(NotificationForm, self).__init__(*args, **kwargs)
+    #    self.fields['farmsall'].queryset = farmsall.objects.filter(queryset=None)
 
 
 def form_validation_error(form):
