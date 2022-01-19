@@ -41,7 +41,11 @@ class FarmForm(forms.ModelForm):
 
     # GeoDjango-specific: a geometry field
     pnt = forms.PointField(widget=
-        forms.OSMWidget(attrs={'map_width': 800, 'map_height': 500}))
+        forms.OSMWidget(attrs={'map_width': 800,
+            'map_height': 500,
+            "default_lat": 37.158517,
+            "default_lon":  -119.938244,
+            "default_zoom": 6}))
         
     class Meta:
         model = FarmLoc

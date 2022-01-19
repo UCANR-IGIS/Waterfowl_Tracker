@@ -119,8 +119,18 @@
                     Locations
                 </div>
                 <div class="card-body">
+                    {% for farmset in user.farmloc_set.all %}
+                     <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="{{ farmset.id }}" id="farm" name="farm"  {% for farms in notification.farm.all %}
+                                {% if farmset.id == farms.id %} checked {% endif %}
+                            {% endfor %}>
+                        <label class="form-check-label" for="farm">
+                            {{farmset.name}}
+                        </label>
+                    </div>
+                    {% endfor %}
                     <!--<label for="cars">Farms for Report:</label>-->
-                    <select class="form-select" multiple aria-label="Farms for Report:" name="farm" id="farm">
+                   <!-- <select class="form-select" multiple aria-label="Farms for Report:" name="farm" id="farm">
                         {% for farmset in user.farmloc_set.all %}
                         <option value="{{ farmset.id }}"
                             {% for farms in notification.farm.all %}
@@ -128,7 +138,7 @@
                             {% endfor %}
                             >{{ farmset.name }}</option>
                         {% endfor %}
-                    </select>
+                    </select>-->
                 </div>
             </div>
         </div>

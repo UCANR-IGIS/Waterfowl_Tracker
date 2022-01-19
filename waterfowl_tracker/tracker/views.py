@@ -59,59 +59,6 @@ class NotificationView(View):
         return render(request, 'notifications.html', context)
 
     def post(self, request):
-        #farmloc = FarmLoc.objects.filter(owner_id=1)
-        #farmloc.
-        '''farms = request.POST.getlist('farm')
-        #farms = [int(i) for i in project_users]
-
-        tempdict = self.request.POST.copy()
-
-        if 'owner_id' in tempdict.keys():
-            tempdict['owner'] = int(tempdict['owner'])
-
-        if 'alerts' in tempdict.keys():
-            tempdict['alerts'] = True
-        else:
-            tempdict['alerts'] = False
-
-        if 'low_dens' in tempdict.keys():
-            tempdict['low_dens'] = True
-        else:
-            tempdict['low_dens'] = False
-
-        if 'med_dens' in tempdict.keys():
-            tempdict['med_dens'] = True
-        else:
-            tempdict['med_dens'] = False
-
-        if 'high_dens' in tempdict.keys():
-            tempdict['high_dens'] = True
-        else:
-            tempdict['high_dens'] = False
-
-        if 'on_prop' in tempdict.keys():
-            tempdict['on_prop'] = True
-        else:
-            tempdict['on_prop'] = False
-
-        if 'two_km' in tempdict.keys():
-            tempdict['two_km'] = True
-        else:
-            tempdict['two_km'] = False
-
-        if 'five_km' in tempdict.keys():
-            tempdict['five_km'] = True
-        else:
-            tempdict['five_km'] = False
-
-        if 'ten_km' in tempdict.keys():
-            tempdict['ten_km'] = True
-        else:
-            tempdict['ten_km'] = False
-
-        tempdict['farm'] = farms
-
-        self.request.POST = tempdict  # this is the added line'''
         farms = request.POST.getlist('farm')
         farms = tuple([int(i) for i in farms])
 
@@ -154,7 +101,7 @@ def edit(request, id):
     return render(request,'edit.html', {'farm':farm})  
 def update(request, id):  
     farm = FarmLoc.objects.get(id=id)  
-    form = FarmForm(request.POST, instance = farm)  
+    form = FarmForm(request.POST, instance=farm)
     if form.is_valid():  
         form.save()  
         return redirect("/")  
