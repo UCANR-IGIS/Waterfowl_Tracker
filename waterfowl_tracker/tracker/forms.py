@@ -1,5 +1,5 @@
-from django import forms
-from .models import Profile
+from django.contrib.gis import forms
+from .models import FarmLoc, Profile
 from .models import Notification
 
 
@@ -32,6 +32,25 @@ class NotificationForm(forms.ModelForm):
         fields = '__all__'
         exclude = ['user']
 
+class FarmForm(forms.ModelForm):  
+    name = forms.CharField()
+    address = forms.CharField()
+    city = forms.CharField()
+    state = forms.CharField()
+    prod_type = forms.CharField()
+    farm_type = forms.CharField()
+    lon = forms.FloatField()
+    lat = forms.FloatField()
+    #owner = forms.ForeignKey()
+
+    # GeoDjango-specific: a geometry field
+    pnt = forms.PointField(widget=
+        forms.OSMWidget(attrs={'map_width': 800, 'map_height': 500}))
+        
+    class Meta:
+        model = FarmLoc
+        fields = '__all__'
+        exclude = ['user']
 
 def form_validation_error(form):
     msg = ""

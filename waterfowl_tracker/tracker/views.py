@@ -7,7 +7,7 @@ from django.views import View
 from .forms import ProfileForm, form_validation_error
 from .models import Profile
 
-from .forms import NotificationForm, form_validation_error
+from .forms import NotificationForm, FarmForm, form_validation_error
 from .models import Notification, FarmLoc
 
 
@@ -16,7 +16,7 @@ def index(request):
     return render(request, 'index.html')
 
 def farms(request):  
-    farms = FarmLoc.objects.all()  
+    farms = FarmLoc.objects.filter(owner=request.user)  
     return render(request,"farms.html",{'farms':farms})
 
 @method_decorator(login_required(login_url='login'), name='dispatch')
@@ -69,3 +69,30 @@ class NotificationView(View):
         else:
             messages.error(request, form_validation_error(form))
         return redirect('notifications')
+
+def addnew(request):  
+    if request.method == "POST":  
+        form = FarmForm(request.POST)  
+        if form.is_valid():  
+            try:  
+                form.save()  
+                return redirect('/')  
+            except:  
+                pass 
+    else:  
+        form = FarmForm()  
+    return render(request,'addnew.html',{'form':form})  
+def edit(request, id):  
+    farm = FarmLoc.objects.get(id=id)  
+    return render(request,'edit.html', {'farm':farm})  
+def update(request, id):  
+    farm = FarmLoc.objects.get(id=id)  
+    form = FarmForm(request.POST, instance = farm)  
+    if form.is_valid():  
+        form.save()  
+        return redirect("/")  
+    return render(request, 'edit.html', {'farm': farm})  
+def destroy(request, id):  
+    farm = FarmLoc.objects.get(id=id)  
+    farm.delete()  
+    return redirect("/")  
