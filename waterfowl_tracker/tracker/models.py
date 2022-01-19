@@ -5,6 +5,10 @@ intType = [
     ('Always', 'Always'),
     ('Detect', 'Only when waterfowl are detected')
 ]
+freqType = [
+    ('daily', 'Daily'),
+    ('weekly', 'Weekly')
+]
 
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name="profile", on_delete=models.CASCADE)
@@ -51,7 +55,7 @@ class Notification(models.Model):
     two_km = models.BooleanField('2 km Radius', default=False)
     five_km = models.BooleanField('5 km Radius', default=False)
     ten_km = models.BooleanField('10 km Radius', default=False)
-    daily = models.CharField('Daily', max_length=50, choices=intType)
-    weekly = models.CharField('Weekly', max_length=50, choices=intType)
+    interval = models.CharField('Waterfowl Presence', max_length=50, choices=intType)
+    reportfreq = models.CharField('Report Frequency', max_length=50, choices=freqType)
     emails = models.CharField('Alert Emails (separate with comma)', max_length=250, default='')
     farm = models.ManyToManyField(FarmLoc)
