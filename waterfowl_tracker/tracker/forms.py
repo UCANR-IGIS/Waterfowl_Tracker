@@ -1,4 +1,5 @@
 from django.contrib.gis import forms
+from leaflet.forms.widgets import LeafletWidget
 from .models import FarmLoc, Profile
 from .models import Notification
 from .models import FarmLoc
@@ -41,11 +42,14 @@ class FarmForm(forms.ModelForm):
 
     # GeoDjango-specific: a geometry field
     pnt = forms.PointField(widget=
-        forms.OSMWidget(attrs={'map_width': 800,
-            'map_height': 500,
-            "default_lat": 37.158517,
-            "default_lon":  -119.938244,
-            "default_zoom": 6}))
+        LeafletWidget(attrs={'map_width': '800px',
+            'map_height': '500px',
+            'display_raw': 'true',
+            'settings_overrides': {
+                'DEFAULT_CENTER': (37.158517, -119.938244),
+                'DEFAULT_ZOOM' : 6
+            },
+            }))
         
     class Meta:
         model = FarmLoc

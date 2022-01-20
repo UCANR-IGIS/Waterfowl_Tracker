@@ -7,44 +7,77 @@
   {{ form.media }}
   <form method="POST" class="post-form" action="{% url 'update' farm.id %}">
     {% csrf_token %}
-    <div class="form-group row">
-      <label class="col-sm-1 col-form-label"></label>
-      <div class="col-sm-4">
-        <h3>Update Details</h3>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">Farm Name:</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" name="name" id="name" required maxlength="100"
-          value="{{ farm.name }}" />
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">Address:</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" name="address" id="address" required maxlength="100"
-          value="{{ farm.address }}" />
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">City:</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" name="city" id="city" required maxlength="100" value="{{ farm.city}}" />
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">State:</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" name="state" id="state" required maxlength="2"
-          value="{{ farm.state }}" />
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-1 col-form-label"></label>
-      <div class="col-sm-4">
-        <button type="submit" class="btn btn-success btn-lg">Update</button>
-      </div>
-    </div>
+    <div class="row">
+            <div class="col-12 col-xl-8">
+                <div class="form-group row">
+                    <label class="col-sm-1 col-form-label"></label>
+                    <div class="col-sm-4">
+                        <h3>Update Details</h3>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Farm Name:</label>
+                    <div class="col-sm-4">
+                        {{ form.name }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Address:</label>
+                    <div class="col-sm-4">
+                        {{ form.address }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">City:</label>
+                    <div class="col-sm-4">
+                        {{ form.city }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">State:</label>
+                    <div class="col-sm-4">
+                        {{ form.state }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Production Type:</label>
+                    <div class="col-sm-4">
+                        {{ form.prod_type }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Farm Type:</label>
+                    <div class="col-sm-4">
+                        {{ form.farm_type }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Longitude:</label>
+                    <div class="col-sm-4">
+                        {{ form.lon }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Latitude:</label>
+                    <div class="col-sm-4">
+                        {{ form.lat }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Location:</label>
+                    <div class="col-sm-4">
+                        {{ form.pnt }}
+                    </div>
+                    <input type="hidden" id="owner_id" name="owner" value="{{ request.user.id }}">
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-1 col-form-label"></label>
+                    <div class="col-sm-4">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
   </form>
   {% endblock content %}

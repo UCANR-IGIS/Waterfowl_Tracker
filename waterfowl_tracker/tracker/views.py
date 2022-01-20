@@ -97,8 +97,9 @@ def addnew(request):
         form = FarmForm()  
     return render(request,'addnew.html',{'form':form})  
 def edit(request, id):  
-    farm = FarmLoc.objects.get(id=id)  
-    return render(request,'edit.html', {'farm':farm})  
+    farm = FarmLoc.objects.get(id=id)
+    form = FarmForm(instance=farm)
+    return render(request,'edit.html', {'form':form,'farm':farm})
 def update(request, id):  
     farm = FarmLoc.objects.get(id=id)  
     form = FarmForm(request.POST, instance=farm)
