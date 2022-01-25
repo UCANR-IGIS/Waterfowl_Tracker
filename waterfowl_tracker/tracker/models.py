@@ -59,3 +59,19 @@ class Notification(models.Model):
     reportfreq = models.CharField('Report Frequency', max_length=50, choices=freqType)
     emails = models.CharField('Alert Emails (separate with comma)', max_length=250, default='')
     farm = models.ManyToManyField(FarmLoc)
+
+class FarmWaterfowlDensities(models.Model):
+    date1   = models.DateField()
+    farm_id = models.BigIntegerField(primary_key=True,)
+    owner_id = models.BigIntegerField()
+    name = models.CharField('Farm Name', max_length=100)
+    lon = models.FloatField()
+    lat = models.FloatField()
+    density_onfarm = models.CharField('Waterfowl density on farm', max_length=10)
+    density_2km = models.CharField('Waterfowl density within 2km of farm', max_length=10)
+    density_5km = models.CharField('Waterfowl density within 5km of farm', max_length=10)
+    density_10km = models.CharField('Waterfowl density within 10km of farm', max_length=10)
+
+    class Meta:
+        managed = False
+        db_table='farmsmodel'

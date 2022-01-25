@@ -10,7 +10,6 @@ from .models import Profile
 from .forms import NotificationForm, FarmForm, form_validation_error
 from .models import Notification, FarmLoc
 
-
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
