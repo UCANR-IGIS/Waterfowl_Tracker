@@ -10,6 +10,20 @@ from .models import Profile
 from .forms import NotificationForm, FarmForm, form_validation_error
 from .models import Notification, FarmLoc
 
+from django.db import transaction, connection
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
+
+@receiver(post_save, sender=FarmLoc)
+def refresh_view(sender, **kwargs):
+    with connection.cursor() as cursor:
+        cursor.execute("REFRESH MATERIALIZED VIEW CONCURRENTLY farmsmodel")
+
+@receiver(post_delete, sender=FarmLoc)
+def refresh_view(sender, **kwargs):
+    with connection.cursor() as cursor:
+        cursor.execute("REFRESH MATERIALIZED VIEW CONCURRENTLY farmsmodel")
+
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
@@ -88,9 +102,9 @@ def addnew(request):
         form = FarmForm(request.POST)  
         if form.is_valid():  
             try:  
-                form.save()  
-                return redirect('/')  
-            except:  
+                form.save()
+                return redirect('/')
+            except:
                 pass 
     else:  
         form = FarmForm()  
@@ -103,11 +117,11 @@ def update(request, id):
     farm = FarmLoc.objects.get(id=id)  
     form = FarmForm(request.POST, instance=farm)
     if form.is_valid():  
-        form.save()  
-        return redirect("/")  
-    return render(request, 'edit.html', {'farm': farm})  
+        form.save()
+        return redirect("/")
+    return render(request, 'edit.html', {'farm': farm})
 def destroy(request, id):  
     farm = FarmLoc.objects.get(id=id)  
     farm.delete()  
-    return redirect("/")  
+    return redirect("/")
  
