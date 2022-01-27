@@ -49,7 +49,10 @@
 
     });
     addEventListener('load', (event) => {
-            $('#myModal').modal('show')
+        if (localStorage.getItem('#myModal') !== 'true') {
+            $('#myModal').modal('show');
+            localStorage.setItem('#myModal','true');
+        }
         });
   </script>
 {% endblock content %}

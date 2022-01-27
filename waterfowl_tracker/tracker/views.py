@@ -15,6 +15,9 @@ from .models import Notification, FarmLoc
 def index(request):
     return render(request, 'index.html')
 
+def app(request):
+    return render(request, 'app.html')
+
 def farms(request):  
     farms = FarmLoc.objects.filter(owner=request.user)  
     return render(request,"farms.html",{'farms':farms})
