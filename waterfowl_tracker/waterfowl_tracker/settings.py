@@ -80,6 +80,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'wf_tracker',
+        'HOST': '128.120.155.85',
+        'PORT': '5432',
         'USER': 'postgres',
         'PASSWORD': 'ANR_GIS_Admin',
     }
