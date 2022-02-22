@@ -75,3 +75,14 @@ class FarmWaterfowlDensities(models.Model):
     class Meta:
         managed = False
         db_table='farmsmodel'
+
+class FarmBuffer(models.Model):
+    id = models.BigIntegerField(primary_key=True,)
+    parent_id = models.BigIntegerField()
+    owner_id = models.BigIntegerField()
+    dist1 = models.CharField('Distance', max_length=100)
+    geometry = models.PolygonField()
+
+    class Meta:
+        managed = False
+        db_table='farmsbuffer'

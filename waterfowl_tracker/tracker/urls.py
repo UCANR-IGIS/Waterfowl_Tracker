@@ -11,4 +11,6 @@ urlpatterns = [
     path('edit/<id>', views.edit, name='edit'),
     path('update/<id>', views.update, name='update'),
     path('delete/<id>', views.destroy, name='delete'),
+    path('farm_json/', views.farm_json, name='farm_json'),
+    path('buffer_json/', views.buffer_json, name='buffer_json')
 ]

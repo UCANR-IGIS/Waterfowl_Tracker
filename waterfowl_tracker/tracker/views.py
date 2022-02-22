@@ -8,11 +8,13 @@ from .forms import ProfileForm, form_validation_error
 from .models import Profile
 
 from .forms import NotificationForm, FarmForm, form_validation_error
-from .models import Notification, FarmLoc
+from .models import Notification, FarmLoc, FarmWaterfowlDensities, FarmBuffer
 
 from django.db import transaction, connection
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
+from django.core import serializers
+from django.http import HttpResponse
 
 @receiver(post_save, sender=FarmLoc)
 def refresh_view(sender, **kwargs):
@@ -29,11 +31,28 @@ def index(request):
     return render(request, 'index.html')
 
 def app(request):
-    return render(request, 'app.html')
+    min_date = FarmWaterfowlDensities.objects.earliest('date1').date1
+    max_date = FarmWaterfowlDensities.objects.latest('date1').date1
+    farms_all = FarmWaterfowlDensities.objects.filter(owner_id=request.user.id)
+    farms_list = list(farms_all)
+    farms = serializers.serialize("json", farms_list)
+    return render(request, 'app.html', {'farms': farms, 'max_date': max_date, 'min_date': min_date})
+
+def farm_json(request):
+    farms_pnts = serializers.serialize('geojson', FarmLoc.objects.filter(owner=request.user.id),
+                                       geometry_field='pnt',
+                                       fields=('name',))
+    return HttpResponse(farms_pnts, content_type='application/json')
+
+def buffer_json(request):
+    farms_buffers = serializers.serialize('geojson', FarmBuffer.objects.filter(owner_id=request.user.id),
+                                       geometry_field='geometry',
+                                       fields=('dist1',))
+    return HttpResponse(farms_buffers, content_type='application/json')
 
 def farms(request):  
     farms = FarmLoc.objects.filter(owner=request.user)  
-    return render(request,"farms.html",{'farms':farms})
+    return render(request, "farms.html", {'farms': farms})
 
 @method_decorator(login_required(login_url='login'), name='dispatch')
 class ProfileView(View):
