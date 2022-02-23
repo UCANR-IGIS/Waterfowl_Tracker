@@ -47,7 +47,7 @@ def farm_json(request):
 def buffer_json(request):
     farms_buffers = serializers.serialize('geojson', FarmBuffer.objects.filter(owner_id=request.user.id),
                                        geometry_field='geometry',
-                                       fields=('dist1',))
+                                       fields=('parent_id', 'dist1',))
     return HttpResponse(farms_buffers, content_type='application/json')
 
 def farms(request):  

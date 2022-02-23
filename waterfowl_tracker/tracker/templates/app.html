@@ -26,6 +26,9 @@
         <div class="col-md-2">
                         <button id="dateBtn" type="button" class="btn btn-primary">Update Table</button>
                     </div>
+         <div class="col-md-2">
+                        <button id="extentBtn" type="button" class="btn btn-primary">Full Extent</button>
+                    </div>
     </div>
 <nav>
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -88,23 +91,80 @@
 ].join('-');
   $("#date1").val(init_date)
   $("#date2").val(max_date)
+  var selFarm = ''
     require([
       "esri/config",
       "esri/layers/GeoJSONLayer",
       "esri/Map",
-      "esri/views/MapView"
-    ], function (esriConfig, GeoJSONLayer, Map, MapView) {
+      "esri/views/MapView",
+        "esri/renderers/UniqueValueRenderer"
+    ], function (esriConfig, GeoJSONLayer, Map, MapView, UniqueValueRenderer) {
 
       esriConfig.apiKey =
         "AAPK29245d45dda447df8db2686469e5276eHnVlh3OjwGtcvYaF5Kda1OF8vwa2o754cluHDM2STZsaNB7wyguzWwtj5lwrL6PG";
+      let renderer = {
+  type: "unique-value",  // autocasts as new UniqueValueRenderer()
+  field: "dist1",
+  defaultSymbol: { type: "simple-fill" },  // autocasts as new SimpleFillSymbol()
+  uniqueValueInfos: [{
+    // All features with value of "North" will be blue
+    value: "OnFarm",
+    symbol: {
+      type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+        color: [0, 0, 0, 0],
+  style: "solid",
+  outline: {  // autocasts as new SimpleLineSymbol()
+    color: "blue",
+    width: 1
+  }
+    }
+  }, {
+    // All features with value of "East" will be green
+    value: "2km",
+    symbol: {
+      type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+        color: [0, 0, 0, 0],
+  style: "solid",
+  outline: {  // autocasts as new SimpleLineSymbol()
+    color: "green",
+    width: 1
+  }
+    }
+  }, {
+    // All features with value of "South" will be red
+    value: "5km",
+    symbol: {
+      type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+        color: [0, 0, 0, 0],
+  style: "solid",
+  outline: {  // autocasts as new SimpleLineSymbol()
+    color: "orange",
+    width: 1
+  }
+    }
+  }, {
+    // All features with value of "West" will be yellow
+    value: "10km",
+    symbol: {
+      type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+        color: [0, 0, 0, 0],
+  style: "solid",
+  outline: {  // autocasts as new SimpleLineSymbol()
+    color: "red",
+    width: 1
+  }
+    }
+  }]
+};
       const geojsonLayer = new GeoJSONLayer({
   url: '{% url 'farm_json' %}',
   copyright: "USGS Earthquakes"
 });
       const geojsonLayer2 = new GeoJSONLayer({
   url: '{% url 'buffer_json' %}',
-  copyright: "USGS Earthquakes"
+  renderer: renderer
 });
+
       const map = new Map({
         basemap: "arcgis-topographic", // Basemap layer
           layers: [geojsonLayer, geojsonLayer2]
@@ -119,12 +179,31 @@
           snapToZoom: false
         }
       });
+      zoomToLayer(geojsonLayer2);
+         function zoomToLayer(layer) {
+          return layer.queryExtent().then((response) => {
+            view.goTo(response.extent.expand(1.5)).catch((error) => {
+              console.error(error);
+            });
+          });
+        }
+        $("#bootstrapdatatable").on('click', 'tr', function() {
+        selFarm = $(this).attr("id")
+             var query = geojsonLayer2.createQuery();
+      query.where = "parent_id = " + selFarm + "";
+      geojsonLayer2.queryExtent(query).then(function(results){
+        view.goTo(results.extent.expand(1.5));  // go to the extent of all the graphics in the layer view
+        });
+    });
+         $("#extentBtn").click(function() {
+             zoomToLayer(geojsonLayer2);
+         })
 
     });
     $(function () {
     $.each(data, function(i, val){
         if (val.fields.date1 >= init_date && val.fields.date1 <= max_date) {
-            trHTML += '<tr><td>' + val.fields.date1 + '</td><td>' + val.fields.name + '</td><td>' + val.fields.density_onfarm + '</td><td>' + val.fields.density_2km + '</td><td>' + val.fields.density_5km + '</td><td>' + val.fields.density_10km + '</td></tr>'
+            trHTML += '<tr id="' + val.pk + '"><td>' + val.fields.date1 + '</td><td>' + val.fields.name + '</td><td>' + val.fields.density_onfarm + '</td><td>' + val.fields.density_2km + '</td><td>' + val.fields.density_5km + '</td><td>' + val.fields.density_10km + '</td></tr>'
         }
     })
     $('#bootstrapdatatable tbody').append(trHTML);
@@ -158,10 +237,11 @@
         trHTML = ''
             $.each(data, function(i, val){
         if (val.fields.date1 >= $("#date1").val() && val.fields.date1 <= $("#date2").val()) {
-            trHTML += '<tr id="' + val.fields.name + '"><td>' + val.fields.date1 + '</td><td>' + val.fields.name + '</td><td>' + val.fields.density_onfarm + '</td><td>' + val.fields.density_2km + '</td><td>' + val.fields.density_5km + '</td><td>' + val.fields.density_10km + '</td></tr>'
+            trHTML += '<tr id="' + val.pk + '"><td>' + val.fields.date1 + '</td><td>' + val.fields.name + '</td><td>' + val.fields.density_onfarm + '</td><td>' + val.fields.density_2km + '</td><td>' + val.fields.density_5km + '</td><td>' + val.fields.density_10km + '</td></tr>'
         }
     })
     $('#bootstrapdatatable tbody').append(trHTML);
     })
+
   </script>
 {% endblock content %}
