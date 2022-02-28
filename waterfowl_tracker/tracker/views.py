@@ -16,15 +16,15 @@ from django.dispatch import receiver
 from django.core import serializers
 from django.http import HttpResponse
 
-@receiver(post_save, sender=FarmLoc)
-def refresh_view(sender, **kwargs):
-    with connection.cursor() as cursor:
-        cursor.execute("REFRESH MATERIALIZED VIEW CONCURRENTLY farmsmodel")
+#@receiver(post_save, sender=FarmLoc)
+#def refresh_view(sender, **kwargs):
+#    with connection.cursor() as cursor:
+#        cursor.execute("REFRESH MATERIALIZED VIEW CONCURRENTLY farmsmodel")
 
-@receiver(post_delete, sender=FarmLoc)
-def refresh_view(sender, **kwargs):
-    with connection.cursor() as cursor:
-        cursor.execute("REFRESH MATERIALIZED VIEW CONCURRENTLY farmsmodel")
+#@receiver(post_delete, sender=FarmLoc)
+#def refresh_view(sender, **kwargs):
+#    with connection.cursor() as cursor:
+#        cursor.execute("REFRESH MATERIALIZED VIEW CONCURRENTLY farmsmodel")
 
 # Create your views here.
 def index(request):
