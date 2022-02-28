@@ -54,6 +54,10 @@ def farms(request):
     farms = FarmLoc.objects.filter(owner=request.user)  
     return render(request, "farms.html", {'farms': farms})
 
+def notifications(request):
+    notifications = Notification.objects.filter(owner=request.user)
+    return render(request, "notification.html", {'notifications': notifications})
+
 @method_decorator(login_required(login_url='login'), name='dispatch')
 class ProfileView(View):
     profile = None
@@ -81,7 +85,7 @@ class ProfileView(View):
             messages.error(request, form_validation_error(form))
         return redirect('profile')
 
-@method_decorator(login_required(login_url='login'), name='dispatch')
+'''@method_decorator(login_required(login_url='login'), name='dispatch')
 class NotificationView(View):
     notification = None
 
@@ -117,7 +121,20 @@ class NotificationView(View):
             notification.save()
 
             messages.success(request, 'Notification saved successfully')
-        return redirect('notifications')
+        return redirect('notifications')'''
+
+def NotificationView(request):
+    if request.method == "POST":
+        form = NotificationForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                return redirect('/')
+            except:
+                pass
+    else:
+        form = NotificationForm()
+    return render(request, 'notifications.html', {'form': form})
 
 def addnew(request):  
     if request.method == "POST":  
@@ -145,5 +162,20 @@ def update(request, id):
 def destroy(request, id):  
     farm = FarmLoc.objects.get(id=id)  
     farm.delete()  
+    return redirect("/")
+def editNotification(request, id):
+    notification = Notification.objects.get(id=id)
+    form = NotificationForm(instance=notification)
+    return render(request,'editnotification.html', {'form':form,'notification':notification})
+def updateNotification(request, id):
+    notification = Notification.objects.get(id=id)
+    form = NotificationForm(request.POST, instance=notification)
+    if form.is_valid():
+        form.save()
+        return redirect("/")
+    return render(request, 'editnotification.html', {'notification': notification})
+def destroyNotification(request, id):
+    notification = Notification.objects.get(id=id)
+    notification.delete()
     return redirect("/")
  
