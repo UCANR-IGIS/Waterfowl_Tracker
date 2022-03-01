@@ -129,7 +129,7 @@ def NotificationView(request):
         if form.is_valid():
             try:
                 form.save()
-                return redirect('/')
+                return redirect('notification')
             except:
                 pass
     else:
@@ -142,7 +142,7 @@ def addnew(request):
         if form.is_valid():  
             try:  
                 form.save()
-                return redirect('/')
+                return redirect('farms')
             except:
                 pass 
     else:  
@@ -157,12 +157,12 @@ def update(request, id):
     form = FarmForm(request.POST, instance=farm)
     if form.is_valid():  
         form.save()
-        return redirect("/")
+        return redirect("farms")
     return render(request, 'edit.html', {'farm': farm})
 def destroy(request, id):  
     farm = FarmLoc.objects.get(id=id)  
     farm.delete()  
-    return redirect("/")
+    return redirect("farms")
 def editNotification(request, id):
     notification = Notification.objects.get(id=id)
     form = NotificationForm(instance=notification)
@@ -172,10 +172,10 @@ def updateNotification(request, id):
     form = NotificationForm(request.POST, instance=notification)
     if form.is_valid():
         form.save()
-        return redirect("/")
+        return redirect("notification")
     return render(request, 'editnotification.html', {'notification': notification})
 def destroyNotification(request, id):
     notification = Notification.objects.get(id=id)
     notification.delete()
-    return redirect("/")
+    return redirect("notification")
  
