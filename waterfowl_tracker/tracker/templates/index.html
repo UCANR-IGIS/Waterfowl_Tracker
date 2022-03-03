@@ -28,19 +28,26 @@
     require([
       "esri/config",
       "esri/Map",
-      "esri/views/MapView"
-    ], function (esriConfig, Map, MapView) {
+      "esri/views/MapView",
+         "esri/layers/ImageryLayer",
+        "esri/layers/MapImageLayer"
+    ], function (esriConfig, Map, MapView, ImageryLayer, MapImageLayer) {
 
       esriConfig.apiKey =
         "AAPK29245d45dda447df8db2686469e5276eHnVlh3OjwGtcvYaF5Kda1OF8vwa2o754cluHDM2STZsaNB7wyguzWwtj5lwrL6PG";
+      let rast = new MapImageLayer({
+  // URL to the imagery service
+  url: "https://geodata.ucanr.edu/arcgis/rest/services/AvianFlu/AvianFluDailyLatest/MapServer"
+});
       const map = new Map({
-        basemap: "arcgis-topographic" // Basemap layer
+        basemap: "arcgis-topographic", // Basemap layer
+          layers: [rast]
       });
 
       const view = new MapView({
         map: map,
-        center: [-118.805, 34.027],
-        zoom: 13, // scale: 72223.819286
+        center: [-120.741175, 37.636603],
+        zoom: 7, // scale: 72223.819286
         container: "viewDiv",
         constraints: {
           snapToZoom: false
