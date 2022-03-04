@@ -1,65 +1,72 @@
 {% extends 'base.html' %} {% block content %}
+    {% load static %}
     <div id="myModal" class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Modal body text goes here.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">California Waterfowl Tracker</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img src="{% static 'images/41803823966219245.jpeg' %}" alt="" width="100%"/>
+                    <p>The Waterfowl Tracker is to be used for the express purposes of monitoring waterfowl movement for
+                        research purposes and managing risak in relation to disease spread. Any misuse of the Waterfowl
+                        Tracker, including but not limited to unfair waterfowl hunting practices, is a bannable offense.
+                        Producers found to be misusing the information provided on this site may have their accounts
+                        deleted and organizations permanently banned form accessing the site.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
-<div id='viewDiv'></div>
+    <div id='viewDiv'></div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-  </script>
-  <script src="https://js.arcgis.com/4.22/"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+    <script src="https://js.arcgis.com/4.22/"></script>
 
-  <script>
-    require([
-      "esri/config",
-      "esri/Map",
-      "esri/views/MapView",
-         "esri/layers/ImageryLayer",
-        "esri/layers/MapImageLayer"
-    ], function (esriConfig, Map, MapView, ImageryLayer, MapImageLayer) {
+    <script>
+        require([
+            "esri/config",
+            "esri/Map",
+            "esri/views/MapView",
+            "esri/layers/ImageryLayer",
+            "esri/layers/MapImageLayer"
+        ], function (esriConfig, Map, MapView, ImageryLayer, MapImageLayer) {
 
-      esriConfig.apiKey =
-        "AAPK29245d45dda447df8db2686469e5276eHnVlh3OjwGtcvYaF5Kda1OF8vwa2o754cluHDM2STZsaNB7wyguzWwtj5lwrL6PG";
-      let rast = new MapImageLayer({
-  // URL to the imagery service
-  url: "https://geodata.ucanr.edu/arcgis/rest/services/AvianFlu/AvianFluDailyLatest/MapServer"
-});
-      const map = new Map({
-        basemap: "arcgis-topographic", // Basemap layer
-          layers: [rast]
-      });
+            esriConfig.apiKey =
+                "AAPK29245d45dda447df8db2686469e5276eHnVlh3OjwGtcvYaF5Kda1OF8vwa2o754cluHDM2STZsaNB7wyguzWwtj5lwrL6PG";
+            let rast = new MapImageLayer({
+                // URL to the imagery service
+                url: "https://geodata.ucanr.edu/arcgis/rest/services/AvianFlu/AvianFluDailyLatest/MapServer"
+            });
+            rast.opacity = 0.75;
+            const map = new Map({
+                basemap: "arcgis-topographic", // Basemap layer
+                layers: [rast]
+            });
 
-      const view = new MapView({
-        map: map,
-        center: [-120.741175, 37.636603],
-        zoom: 7, // scale: 72223.819286
-        container: "viewDiv",
-        constraints: {
-          snapToZoom: false
-        }
-      });
+            const view = new MapView({
+                map: map,
+                center: [-120.741175, 37.636603],
+                zoom: 7, // scale: 72223.819286
+                container: "viewDiv",
+                constraints: {
+                    snapToZoom: false
+                }
+            });
 
-    });
-    addEventListener('load', (event) => {
-        if (localStorage.getItem('#myModal') !== 'true') {
-            $('#myModal').modal('show');
-            localStorage.setItem('#myModal','true');
-        }
         });
-  </script>
+        addEventListener('load', (event) => {
+            //if (localStorage.getItem('#myModal') !== 'true') {
+            $('#myModal').modal('show');
+            //localStorage.setItem('#myModal','true');
+            //}
+        });
+    </script>
 {% endblock content %}

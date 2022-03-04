@@ -1,258 +1,315 @@
 {% extends 'base.html' %} {% block content %}
 
-<div id='viewDiv2'></div>
+    <div id='viewDiv2'></div>
     <div id="dataDiv">
-    <div class="row">
-    <div class='col-md-3'>
-        <div class="form-group">
-           <div class="input-group date" id="datetimepicker7" data-target-input="nearest">
-                <input id="date1" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker7"/>
-                <div class="input-group-append" data-target="#datetimepicker7" data-toggle="datetimepicker">
-                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+        <div class="row">
+            <div class='col-md-3'>
+                <div class="form-group">
+                    <div class="input-group date" id="datetimepicker7" data-target-input="nearest">
+                        <input id="date1" type="text" class="form-control datetimepicker-input"
+                               data-target="#datetimepicker7"/>
+                        <div class="input-group-append" data-target="#datetimepicker7" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class='col-md-3'>
-        <div class="form-group">
-           <div class="input-group date" id="datetimepicker8" data-target-input="nearest">
-                <input id="date2" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker8"/>
-                <div class="input-group-append" data-target="#datetimepicker8" data-toggle="datetimepicker">
-                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+            <div class='col-md-3'>
+                <div class="form-group">
+                    <div class="input-group date" id="datetimepicker8" data-target-input="nearest">
+                        <input id="date2" type="text" class="form-control datetimepicker-input"
+                               data-target="#datetimepicker8"/>
+                        <div class="input-group-append" data-target="#datetimepicker8" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div class="col-md-2">
+                <button id="dateBtn" type="button" class="btn btn-primary">Update Table</button>
+            </div>
+            <div class="col-md-2">
+                <button id="csvBtn" type="button" class="btn btn-primary" onclick="tableToCSV()">Export Table</button>
+            </div>
+            <div class="col-md-2">
+                <button id="extentBtn" type="button" class="btn btn-primary">Full Extent</button>
+            </div>
+        </div>
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+                        type="button" role="tab" aria-controls="nav-home" aria-selected="true">Home
+                </button>
+                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+                        type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Profile
+                </button>
+                <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact"
+                        type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Contact
+                </button>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                <table id="bootstrapdatatable" class="table table-striped table-bordered" width="100%">
+                    <thead>
+                    <th>Date</th>
+                    <th>Farm Name</th>
+                    <th>On Farm</th>
+                    <th>2 km</th>
+                    <th>5 km</th>
+                    <th>10 km</th>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+
+                </table>
+            </div>
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
         </div>
     </div>
-        <div class="col-md-2">
-                        <button id="dateBtn" type="button" class="btn btn-primary">Update Table</button>
-                    </div>
-        <div class="col-md-2">
-                        <button id="csvBtn" type="button" class="btn btn-primary" onclick="tableToCSV()">Export Table</button>
-                    </div>
-         <div class="col-md-2">
-                        <button id="extentBtn" type="button" class="btn btn-primary">Full Extent</button>
-                    </div>
-    </div>
-<nav>
-  <div class="nav nav-tabs" id="nav-tab" role="tablist">
-    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Home</button>
-    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</button>
-    <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</button>
-  </div>
-</nav>
-<div class="tab-content" id="nav-tabContent">
-  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-      <table id="bootstrapdatatable" class="table table-striped table-bordered" width="100%">
-            <thead>
-                <th>Date</th>
-                <th>Farm Name</th>
-                <th>On Farm</th>
-                <th>2 km</th>
-                <th>5 km</th>
-                <th>10 km</th>
-             </thead>
-   <tbody>
-
-   </tbody>
-
-  </table>
-  </div>
-  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
-  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
-</div>
-    </div>
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-  </script>
-  <script src="https://js.arcgis.com/4.22/"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+    <script src="https://js.arcgis.com/4.22/"></script>
 
-  <script>
-  var data = JSON.parse('{{ farms|safe }}')
-  var trHTML = ''
-  var userID = '{{ request.user.id }}'
-  var d1 = new Date('{{ max_date }}')
-  var d2 = new Date('{{ min_date }}')
-  var d3 = new Date('{{ max_date }}')
-  var d4 = new Date(d3.setDate(d3.getDate()-1))
-  var max_date = [
-  d1.getFullYear(),
-  ('0' + (d1.getMonth() + 1)).slice(-2),
-  ('0' + d1.getDate()).slice(-2)
-].join('-');
-  var min_date = [
-  d2.getFullYear(),
-  ('0' + (d2.getMonth() + 1)).slice(-2),
-  ('0' + d2.getDate()).slice(-2)
-].join('-');
-  var init_date = [
-  d4.getFullYear(),
-  ('0' + (d4.getMonth() + 1)).slice(-2),
-  ('0' + d4.getDate()).slice(-2)
-].join('-');
-  $("#date1").val(init_date)
-  $("#date2").val(max_date)
-  var selFarm = ''
-    require([
-      "esri/config",
-      "esri/layers/GeoJSONLayer",
-      "esri/Map",
-      "esri/views/MapView",
-        "esri/renderers/UniqueValueRenderer",
-        "esri/layers/ImageryLayer",
-        "esri/layers/MapImageLayer"
-    ], function (esriConfig, GeoJSONLayer, Map, MapView, UniqueValueRenderer, ImageryLayer, MapImageLayer) {
+    <script>
+        var data = JSON.parse('{{ farms|safe }}')
+        var trHTML = ''
+        var userID = '{{ request.user.id }}'
+        var d1 = new Date('{{ max_date }}')
+        var d2 = new Date('{{ min_date }}')
+        var d3 = new Date('{{ max_date }}')
+        var d4 = new Date(d3.setDate(d3.getDate() - 1))
+        var max_date = [
+            d1.getFullYear(),
+            ('0' + (d1.getMonth() + 1)).slice(-2),
+            ('0' + d1.getDate()).slice(-2)
+        ].join('-');
+        var min_date = [
+            d2.getFullYear(),
+            ('0' + (d2.getMonth() + 1)).slice(-2),
+            ('0' + d2.getDate()).slice(-2)
+        ].join('-');
+        var init_date = [
+            d4.getFullYear(),
+            ('0' + (d4.getMonth() + 1)).slice(-2),
+            ('0' + d4.getDate()).slice(-2)
+        ].join('-');
+        $("#date1").val(max_date)
+        $("#date2").val(max_date)
+        var selFarm = ''
+        var dtParam
+        var farmParam
 
-      esriConfig.apiKey =
-        "AAPK29245d45dda447df8db2686469e5276eHnVlh3OjwGtcvYaF5Kda1OF8vwa2o754cluHDM2STZsaNB7wyguzWwtj5lwrL6PG";
-      let renderer = {
-  type: "unique-value",  // autocasts as new UniqueValueRenderer()
-  field: "dist1",
-  defaultSymbol: { type: "simple-fill" },  // autocasts as new SimpleFillSymbol()
-  uniqueValueInfos: [{
-    // All features with value of "North" will be blue
-    value: "OnFarm",
-    symbol: {
-      type: "simple-fill",  // autocasts as new SimpleFillSymbol()
-        color: [0, 0, 0, 0],
-  style: "solid",
-  outline: {  // autocasts as new SimpleLineSymbol()
-    color: "blue",
-    width: 1
-  }
-    }
-  }, {
-    // All features with value of "East" will be green
-    value: "2km",
-    symbol: {
-      type: "simple-fill",  // autocasts as new SimpleFillSymbol()
-        color: [0, 0, 0, 0],
-  style: "solid",
-  outline: {  // autocasts as new SimpleLineSymbol()
-    color: "green",
-    width: 1
-  }
-    }
-  }, {
-    // All features with value of "South" will be red
-    value: "5km",
-    symbol: {
-      type: "simple-fill",  // autocasts as new SimpleFillSymbol()
-        color: [0, 0, 0, 0],
-  style: "solid",
-  outline: {  // autocasts as new SimpleLineSymbol()
-    color: "orange",
-    width: 1
-  }
-    }
-  }, {
-    // All features with value of "West" will be yellow
-    value: "10km",
-    symbol: {
-      type: "simple-fill",  // autocasts as new SimpleFillSymbol()
-        color: [0, 0, 0, 0],
-  style: "solid",
-  outline: {  // autocasts as new SimpleLineSymbol()
-    color: "red",
-    width: 1
-  }
-    }
-  }]
-};
-      const geojsonLayer = new GeoJSONLayer({
-  url: '{% url 'farm_json' %}',
-  copyright: "USGS Earthquakes"
-});
-      const geojsonLayer2 = new GeoJSONLayer({
-  url: '{% url 'buffer_json' %}',
-  renderer: renderer
-});
+        require([
+            "esri/config",
+            "esri/layers/GeoJSONLayer",
+            "esri/Map",
+            "esri/views/MapView",
+            "esri/renderers/UniqueValueRenderer",
+            "esri/layers/ImageryLayer",
+            "esri/layers/MapImageLayer",
+            "esri/widgets/LayerList",
+            "esri/layers/GroupLayer",
+        ], function (esriConfig, GeoJSONLayer, Map, MapView, UniqueValueRenderer, ImageryLayer, MapImageLayer, LayerList, GroupLayer) {
 
-      let rast = new MapImageLayer({
-  // URL to the imagery service
-  url: "https://geodata.ucanr.edu/arcgis/rest/services/AvianFlu/AvianFluDailyLatest/MapServer"
-});
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
 
-      const map = new Map({
-        basemap: "arcgis-topographic", // Basemap layer
-          layers: [rast, geojsonLayer, geojsonLayer2]
-      });
+            dtParam = urlParams.getAll('date')
+            farmParam = urlParams.getAll('farm')
 
-      const view = new MapView({
-        map: map,
-        center: [-120.741175, 37.636603],
-        zoom: 7, // scale: 72223.819286
-        container: "viewDiv2",
-        constraints: {
-          snapToZoom: false
-        }
-      });
-      zoomToLayer(geojsonLayer2);
-         function zoomToLayer(layer) {
-          return layer.queryExtent().then((response) => {
-            view.goTo(response.extent.expand(1.5)).catch((error) => {
-              console.error(error);
+            esriConfig.apiKey =
+                "AAPK29245d45dda447df8db2686469e5276eHnVlh3OjwGtcvYaF5Kda1OF8vwa2o754cluHDM2STZsaNB7wyguzWwtj5lwrL6PG";
+            let renderer = {
+                type: "unique-value",  // autocasts as new UniqueValueRenderer()
+                field: "dist1",
+                defaultSymbol: {type: "simple-fill"},  // autocasts as new SimpleFillSymbol()
+                uniqueValueInfos: [{
+                    // All features with value of "North" will be blue
+                    value: "OnFarm",
+                    symbol: {
+                        type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+                        color: [0, 0, 0, 0],
+                        style: "solid",
+                        outline: {  // autocasts as new SimpleLineSymbol()
+                            color: "grey",
+                            width: 1
+                        }
+                    }
+                }, {
+                    // All features with value of "East" will be green
+                    value: "2km",
+                    symbol: {
+                        type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+                        color: [0, 0, 0, 0],
+                        style: "solid",
+                        outline: {  // autocasts as new SimpleLineSymbol()
+                            color: "grey",
+                            width: 1
+                        }
+                    }
+                }, {
+                    // All features with value of "South" will be red
+                    value: "5km",
+                    symbol: {
+                        type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+                        color: [0, 0, 0, 0],
+                        style: "solid",
+                        outline: {  // autocasts as new SimpleLineSymbol()
+                            color: "grey",
+                            width: 1
+                        }
+                    }
+                }, {
+                    // All features with value of "West" will be yellow
+                    value: "10km",
+                    symbol: {
+                        type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+                        color: [0, 0, 0, 0],
+                        style: "solid",
+                        outline: {  // autocasts as new SimpleLineSymbol()
+                            color: "grey",
+                            width: 1
+                        }
+                    }
+                }]
+            };
+            const geojsonLayer = new GeoJSONLayer({
+                url: '{% url 'farm_json' %}',
+                title: "Farms"
             });
-          });
-        }
-        $("#bootstrapdatatable").on('click', 'tr', function() {
-        selFarm = $(this).attr("id")
-             var query = geojsonLayer2.createQuery();
-      query.where = "parent_id = " + selFarm + "";
-      geojsonLayer2.queryExtent(query).then(function(results){
-        view.goTo(results.extent.expand(1.5));  // go to the extent of all the graphics in the layer view
-        });
-    });
-         $("#extentBtn").click(function() {
-             zoomToLayer(geojsonLayer2);
-         })
+            const geojsonLayer2 = new GeoJSONLayer({
+                url: '{% url 'buffer_json' %}',
+                renderer: renderer,
+                title: "Farm Perimeters"
+            });
+            const farmGroupLayer = new GroupLayer({
+                title: "My Properties",
+                visible: true,
+                visibilityMode: "independent",
+                layers: [geojsonLayer, geojsonLayer2]
+            });
 
-    });
-    $(function () {
-    $.each(data, function(i, val){
-        if (val.fields.date1 >= init_date && val.fields.date1 <= max_date) {
-            trHTML += '<tr id="' + val.pk + '"><td>' + val.fields.date1 + '</td><td>' + val.fields.name + '</td><td>' + val.fields.density_onfarm + '</td><td>' + val.fields.density_2km + '</td><td>' + val.fields.density_5km + '</td><td>' + val.fields.density_10km + '</td></tr>'
-        }
-    })
-    $('#bootstrapdatatable tbody').append(trHTML);
-        $('#datetimepicker7').datetimepicker({
-            useCurrent: false,
-                    format: 'YYYY-MM-DD',
-                    minDate: min_date,
-                    maxDate: max_date,
-                    widgetPositioning: {
-                vertical: 'bottom'
+            const rast = new MapImageLayer({
+                // URL to the imagery service
+                url: "https://geodata.ucanr.edu/arcgis/rest/services/AvianFlu/AvianFluDailyLatest/MapServer",
+                title: "Waterfowl Density"
+            });
+            rast.opacity = 0.75;
+
+            const map = new Map({
+                basemap: "arcgis-topographic", // Basemap layer
+                layers: [rast, farmGroupLayer]
+            });
+
+            const view = new MapView({
+                map: map,
+                center: [-120.741175, 37.636603],
+                zoom: 7, // scale: 72223.819286
+                container: "viewDiv2",
+                constraints: {
+                    snapToZoom: false
+                }
+            });
+            let layerList = new LayerList({
+                view: view
+            });
+// Adds widget below other elements in the top left corner of the view
+            view.ui.add(layerList, {
+                position: "top-right"
+            });
+
+            if (farmParam[0]) {
+                selFarm = farmParam[0]
+                zoomToFarm(selFarm)
+            } else {
+                zoomToLayer(geojsonLayer2);
             }
+
+            function zoomToLayer(layer) {
+                return layer.queryExtent().then((response) => {
+                    view.goTo(response.extent.expand(1.5)).catch((error) => {
+                        console.error(error);
+                    });
                 });
-        $('#datetimepicker8').datetimepicker({
-            useCurrent: false,
-            format: 'YYYY-MM-DD',
-            maxDate: max_date,
-            minDate: min_date,
-            widgetPositioning: {
-                vertical: 'bottom'
             }
+
+            $("#bootstrapdatatable").on('click', 'tr', function () {
+                selFarm = $(this).attr("id")
+                zoomToFarm(selFarm)
+            });
+
+            function zoomToFarm(farm) {
+                let query = geojsonLayer2.createQuery();
+                query.where = "parent_id = " + selFarm + "";
+                geojsonLayer2.queryExtent(query).then(function (results) {
+                    view.goTo(results.extent.expand(1.5));  // go to the extent of all the graphics in the layer view
+                });
+            }
+
+            $("#extentBtn").click(function () {
+                zoomToLayer(geojsonLayer2);
+            })
+
+            $.each(data, function (i, val) {
+                if (dtParam[0]) {
+                    if (val.fields.date1 == dtParam[0]) {
+                        trHTML += '<tr id="' + val.pk + '"><td>' + val.fields.date1 + '</td><td>' + val.fields.name + '</td><td>' + val.fields.density_onfarm + '</td><td>' + val.fields.density_2km + '</td><td>' + val.fields.density_5km + '</td><td>' + val.fields.density_10km + '</td></tr>'
+                    }
+                } else {
+                    if (val.fields.date1 == max_date) {
+                        trHTML += '<tr id="' + val.pk + '"><td>' + val.fields.date1 + '</td><td>' + val.fields.name + '</td><td>' + val.fields.density_onfarm + '</td><td>' + val.fields.density_2km + '</td><td>' + val.fields.density_5km + '</td><td>' + val.fields.density_10km + '</td></tr>'
+                    }
+                }
+            })
+            $('#bootstrapdatatable tbody').append(trHTML);
+
         });
-        $("#datetimepicker7").on("change.datetimepicker", function (e) {
-            $('#datetimepicker8').datetimepicker('minDate', e.date);
+        $(function () {
+
+            $('#datetimepicker7').datetimepicker({
+                useCurrent: false,
+                format: 'YYYY-MM-DD',
+                minDate: min_date,
+                maxDate: max_date,
+                widgetPositioning: {
+                    vertical: 'bottom'
+                }
+            });
+            $('#datetimepicker8').datetimepicker({
+                useCurrent: false,
+                format: 'YYYY-MM-DD',
+                maxDate: max_date,
+                minDate: min_date,
+                widgetPositioning: {
+                    vertical: 'bottom'
+                }
+            });
+            $("#datetimepicker7").on("change.datetimepicker", function (e) {
+                $('#datetimepicker8').datetimepicker('minDate', e.date);
+            });
+            $("#datetimepicker8").on("change.datetimepicker", function (e) {
+                $('#datetimepicker7').datetimepicker('maxDate', e.date);
+            });
         });
-        $("#datetimepicker8").on("change.datetimepicker", function (e) {
-            $('#datetimepicker7').datetimepicker('maxDate', e.date);
-        });
-    });
-    $("#dateBtn").click(function() {
-        $('#bootstrapdatatable tbody').empty()
-        trHTML = ''
-            $.each(data, function(i, val){
-        if (val.fields.date1 >= $("#date1").val() && val.fields.date1 <= $("#date2").val()) {
-            trHTML += '<tr id="' + val.pk + '"><td>' + val.fields.date1 + '</td><td>' + val.fields.name + '</td><td>' + val.fields.density_onfarm + '</td><td>' + val.fields.density_2km + '</td><td>' + val.fields.density_5km + '</td><td>' + val.fields.density_10km + '</td></tr>'
-        }
-    })
-    $('#bootstrapdatatable tbody').append(trHTML);
-    })
-  function tableToCSV() {
+        $("#dateBtn").click(function () {
+            $('#bootstrapdatatable tbody').empty()
+            trHTML = ''
+            $.each(data, function (i, val) {
+                if (val.fields.date1 >= $("#date1").val() && val.fields.date1 <= $("#date2").val()) {
+                    trHTML += '<tr id="' + val.pk + '"><td>' + val.fields.date1 + '</td><td>' + val.fields.name + '</td><td>' + val.fields.density_onfarm + '</td><td>' + val.fields.density_2km + '</td><td>' + val.fields.density_5km + '</td><td>' + val.fields.density_10km + '</td></tr>'
+                }
+            })
+            $('#bootstrapdatatable tbody').append(trHTML);
+        })
+
+        function tableToCSV() {
 
             // Variable to store the final csv data
             var csv_data = [];
@@ -312,5 +369,5 @@
             document.body.removeChild(temp_link);
         }
 
-  </script>
+    </script>
 {% endblock content %}
