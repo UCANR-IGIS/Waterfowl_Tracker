@@ -87,3 +87,13 @@ class FarmBuffer(models.Model):
     class Meta:
         managed = False
         db_table='farmsbuffer'
+
+class RasterLinks(models.Model):
+    id = models.BigIntegerField(primary_key=True, )
+    filedate = models.CharField('Date', max_length=100)
+    linkname = models.CharField('Link', max_length=100)
+
+
+    class Meta:
+        managed = False
+        db_table='raster_links'

@@ -16,7 +16,7 @@
     <div class='row gx-0'>
         <div class='col'>
             <label class="col-sm-2 col-form-label">Notification Name:</label>
-                    <textarea class="form-control" id="name" rows="1" name='name' data-role="tagsinput"></textarea>
+                    <textarea class="form-control" id="name" rows="1" name='name' data-role="tagsinput" required></textarea>
         </div>
     </div>
     <div class='row gx-0'>
@@ -53,26 +53,26 @@
                 </div>
                 <div class="card-body">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" value="daily" name="reportfreq" id="daily">
+                        <input class="form-check-input" type="radio" value="daily" name="reportfreq" id="daily" required>
                         <label class="form-check-label" for="daily">
                             Daily
                         </label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" value="weekly" name="reportfreq" id="weekly">
+                        <input class="form-check-input" type="radio" value="weekly" name="reportfreq" id="weekly" required>
                         <label class="form-check-label" for="weekly">
                             Weekly
                         </label>
                     </div>
                     <hr>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" value="Always" name="interval" id="Always">
+                        <input class="form-check-input" type="radio" value="Always" name="interval" id="Always" required>
                         <label class="form-check-label" for="Always">
                             Always
                         </label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" value="Detect" name="interval" id="Detect">
+                        <input class="form-check-input" type="radio" value="Detect" name="interval" id="Detect" required>
                         <label class="form-check-label" for="Detect">
                             Only When Waterfowl Are Detected
                         </label>
@@ -122,7 +122,7 @@
                 <div class="card-body">
                     {% for farmset in user.farmloc_set.all %}
                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="{{ farmset.id }}" id="farm" name="farm" >
+                        <input class="form-check-input" type="checkbox" value="{{ farmset.id }}" id="farm" name="farm" required>
                         <label class="form-check-label" for="farm">
                             {{farmset.name}}
                         </label>
@@ -140,7 +140,7 @@
                 </div>
                 <div class="card-body">
                     <label for="emails" class="form-label">Alert Emails</label>
-                    <textarea class="form-control" id="emails" rows="3" name='emails' data-role="tagsinput"></textarea>
+                    <textarea class="form-control" id="emails" rows="3" name='emails' data-role="tagsinput" required></textarea>
                 </div>
             </div>
         </div>
