@@ -8,7 +8,7 @@ from .forms import ProfileForm, form_validation_error
 from .models import Profile
 
 from .forms import NotificationForm, FarmForm, form_validation_error
-from .models import Notification, FarmLoc, FarmWaterfowlDensities, FarmBuffer
+from .models import Notification, FarmLoc, FarmWaterfowlDensities, FarmBuffer, RasterLinks
 
 from django.db import transaction, connection
 from django.db.models.signals import post_save, post_delete
@@ -28,15 +28,15 @@ from django.http import HttpResponse
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html')
+    rasters = serializers.serialize("json", RasterLinks.objects.all())
+    return render(request, 'index.html', {'rasters': rasters})
 
 def app(request):
     min_date = FarmWaterfowlDensities.objects.earliest('date1').date1
     max_date = FarmWaterfowlDensities.objects.latest('date1').date1
-    farms_all = FarmWaterfowlDensities.objects.filter(owner_id=request.user.id)
-    farms_list = list(farms_all)
-    farms = serializers.serialize("json", farms_list)
-    return render(request, 'app.html', {'farms': farms, 'max_date': max_date, 'min_date': min_date})
+    farms = serializers.serialize("json", FarmWaterfowlDensities.objects.filter(owner_id=request.user.id))
+    rasters = serializers.serialize("json", RasterLinks.objects.all())
+    return render(request, 'app.html', {'farms': farms, 'rasters': rasters, 'max_date': max_date, 'min_date': min_date})
 
 def farm_json(request):
     farms_pnts = serializers.serialize('geojson', FarmLoc.objects.filter(owner=request.user.id),
@@ -49,6 +49,7 @@ def buffer_json(request):
                                        geometry_field='geometry',
                                        fields=('parent_id', 'dist1',))
     return HttpResponse(farms_buffers, content_type='application/json')
+
 
 def farms(request):  
     farms = FarmLoc.objects.filter(owner=request.user)  
