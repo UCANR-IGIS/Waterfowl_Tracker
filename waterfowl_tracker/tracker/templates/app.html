@@ -231,7 +231,7 @@
                 opacity: 0.75
             });
 
-            if (dtParam[0]) {
+            if (dtParam[0] && (dtParam[0] < max_date)) {
                 rastDate = moment(dtParam[0]).format("MMMM D, YYYY")
                 map = new Map({
                     basemap: "arcgis-topographic", // Basemap layer
