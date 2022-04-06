@@ -248,7 +248,7 @@
                 rastSublayer = rastAll.sublayers.find(function (sublayer) {
                     return sublayer.title == rastDate + " Prediction (maximum bird density within a 4km window)";
                 });
-                let rastID = rastSublayer.url.slice(-2)
+                let rastID = rastSublayer.url.slice(-2).replace("/","")
                 rastParam = new MapImageLayer({
                     url: "https://geodata.ucanr.edu/arcgis/rest/services/AvianFlu/AvianFluDaily/MapServer",
                     title: "Waterfowl Density",

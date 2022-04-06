@@ -130,3 +130,6 @@ LOGOUT_REDIRECT_URL = 'index'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'tracker')
 MEDIA_URL = '/media/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
+#EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
