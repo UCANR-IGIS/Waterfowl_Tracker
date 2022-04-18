@@ -3,7 +3,7 @@
     <div id='viewDiv2'></div>
     <div id="dataDiv">
         <div class="row">
-            <div class='col-md-3'>
+            <div class='col-md-2'>
                 <div class="form-group">
                     <div class="input-group date" id="datetimepicker7" data-target-input="nearest">
                         <input id="date1" type="text" class="form-control datetimepicker-input"
@@ -14,7 +14,7 @@
                     </div>
                 </div>
             </div>
-            <div class='col-md-3'>
+            <div class='col-md-2'>
                 <div class="form-group">
                     <div class="input-group date" id="datetimepicker8" data-target-input="nearest">
                         <input id="date2" type="text" class="form-control datetimepicker-input"
@@ -32,8 +32,21 @@
                 <button id="csvBtn" type="button" class="btn btn-primary" onclick="tableToCSV()">Export Table</button>
             </div>
             <div class="col-md-2">
+                <button id="rasterBtn" type="button" class="btn btn-primary">Export Rasters</button>
+            </div>
+            <div class="col-md-2">
                 <button id="extentBtn" type="button" class="btn btn-primary">Full Extent</button>
             </div>
+
+        </div>
+        <div class="row">
+            <div class="progress hide" id="progress_bar">
+                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                     style="width: 0%;">
+                </div>
+            </div>
+
+            <p class="hide" id="result"></p>
         </div>
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -248,14 +261,16 @@
                 rastSublayer = rastAll.sublayers.find(function (sublayer) {
                     return sublayer.title == rastDate + " Prediction (maximum bird density within a 4km window)";
                 });
-                let rastID = rastSublayer.url.slice(-2).replace("/","")
+                let rastID = rastSublayer.url.slice(-2).replace("/", "")
                 rastParam = new MapImageLayer({
                     url: "https://geodata.ucanr.edu/arcgis/rest/services/AvianFlu/AvianFluDaily/MapServer",
                     title: "Waterfowl Density",
                     sublayers: [
-                        {id: rastID,
-                        title: rastSublayer.title,
-                        opacity: 0.75}
+                        {
+                            id: rastID,
+                            title: rastSublayer.title,
+                            opacity: 0.75
+                        }
                     ]
                 });
                 map.removeAll();
@@ -453,6 +468,7 @@
 
         function getZip() {
 
+            resetMessage();
             var zip = new JSZip();
 
             // find every checked item
@@ -463,16 +479,73 @@
             });
 
             // when everything has been downloaded, we can trigger the dl
-            zip.generateAsync({type: "blob"})
+            zip.generateAsync({type: "blob"}, function updateCallback(metadata) {
+                var msg = "progression : " + metadata.percent.toFixed(2) + " %";
+                if (metadata.currentFile) {
+                    msg += ", current file = " + metadata.currentFile;
+                }
+                showMessage(msg);
+                updatePercent(metadata.percent | 0);
+            })
                 .then(function callback(blob) {
 
                     // see FileSaver.js
                     saveAs(blob, "example.zip");
 
+                    showMessage("done !");
+                    resetMessage();
+                }, function (e) {
+                    showError(e);
                 });
 
             return false;
         };
+
+
+        /**
+         * Reset the message.
+         */
+        function resetMessage() {
+            $("#result")
+                .removeClass()
+                .text("");
+        }
+
+        /**
+         * show a successful message.
+         * @param {String} text the text to show.
+         */
+        function showMessage(text) {
+            resetMessage();
+            $("#result")
+                .addClass("alert alert-success")
+                .text(text);
+        }
+
+        /**
+         * show an error message.
+         * @param {String} text the text to show.
+         */
+        function showError(text) {
+            resetMessage();
+            $("#result")
+                .addClass("alert alert-danger")
+                .text(text);
+        }
+
+        /**
+         * Update the progress bar.
+         * @param {Integer} percent the current percent
+         */
+        function updatePercent(percent) {
+            $("#progress_bar").removeClass("hide")
+                .find(".progress-bar")
+                .attr("aria-valuenow", percent)
+                .css({
+                    width: percent + "%"
+                });
+        }
+
 
     </script>
 {% endblock content %}

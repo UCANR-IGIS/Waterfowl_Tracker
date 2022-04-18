@@ -28,8 +28,10 @@ from django.http import HttpResponse
 
 # Create your views here.
 def index(request):
+    min_date = FarmWaterfowlDensities.objects.earliest('date1').date1
+    max_date = FarmWaterfowlDensities.objects.latest('date1').date1
     rasters = serializers.serialize("json", RasterLinks.objects.all())
-    return render(request, 'index.html', {'rasters': rasters})
+    return render(request, 'index.html', {'rasters': rasters, 'max_date': max_date, 'min_date': min_date})
 
 def app(request):
     min_date = FarmWaterfowlDensities.objects.earliest('date1').date1

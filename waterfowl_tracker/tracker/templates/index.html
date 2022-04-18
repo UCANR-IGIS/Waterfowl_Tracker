@@ -48,8 +48,43 @@
     </div>
     <div id='viewDiv'></div>
     <div id="dataDiv">
+        <div class="row">
+            <div class='col-md-3'>
+                <div class="form-group">
+                    <div class="input-group date" id="datetimepicker7" data-target-input="nearest">
+                        <input id="date1" type="text" class="form-control datetimepicker-input"
+                               data-target="#datetimepicker7"/>
+                        <div class="input-group-append" data-target="#datetimepicker7" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-3'>
+                <div class="form-group">
+                    <div class="input-group date" id="datetimepicker8" data-target-input="nearest">
+                        <input id="date2" type="text" class="form-control datetimepicker-input"
+                               data-target="#datetimepicker8"/>
+                        <div class="input-group-append" data-target="#datetimepicker8" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button id="rasterBtn" type="button" class="btn btn-primary">Export Rasters</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="progress hide" id="progress_bar">
+                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                     style="width: 0%;">
+                </div>
+            </div>
 
-        <table id="rastertable" class="table table-striped table-bordered" width="100%">
+            <p class="hide" id="result"></p>
+        </div>
+        <table id="rastertable" class="table table-striped table-bordered hide" width="100%">
             <thead>
             <th>Date</th>
             <th>Raster</th>
@@ -71,7 +106,22 @@
     <script>
 
         var data2 = JSON.parse('{{ rasters|safe }}')
+        var d1 = new Date('{{ max_date }}')
+        var d2 = new Date('{{ min_date }}')
+        var max_date = [
+            d1.getFullYear(),
+            ('0' + (d1.getMonth() + 1)).slice(-2),
+            ('0' + d1.getDate()).slice(-2)
+        ].join('-');
+        var min_date = [
+            d2.getFullYear(),
+            ('0' + (d2.getMonth() + 1)).slice(-2),
+            ('0' + d2.getDate()).slice(-2)
+        ].join('-');
+        $("#date1").val(max_date)
+        $("#date2").val(max_date)
         var trHTML2 = ''
+        var linkArr = []
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -106,14 +156,54 @@
                     snapToZoom: false
                 }
             });
-
             $.each(data2, function (i, val) {
-
-                trHTML2 += '<tr><td>' + val.fields.filedate + '</td><td><a href="' + val.fields.linkname + '" target="_blank">Download</a></td></tr>'
+                if (val.fields.filedate == max_date) {
+                    linkArr.push(val.fields.linkname)
+                }
             })
-            $('#rastertable tbody').append(trHTML2);
+
+            {% comment %} $.each(data2, function (i, val) {
+
+                 trHTML2 += '<tr><td>' + val.fields.filedate + '</td><td><a href="' + val.fields.linkname + '" target="_blank">Download</a></td></tr>'
+             })
+             $('#rastertable tbody').append(trHTML2);{% endcomment %}
 
         });
+        $(function () {
+
+            $('#datetimepicker7').datetimepicker({
+                useCurrent: false,
+                format: 'YYYY-MM-DD',
+                minDate: min_date,
+                maxDate: max_date,
+                widgetPositioning: {
+                    vertical: 'bottom'
+                }
+            });
+            $('#datetimepicker8').datetimepicker({
+                useCurrent: false,
+                format: 'YYYY-MM-DD',
+                maxDate: max_date,
+                minDate: min_date,
+                widgetPositioning: {
+                    vertical: 'bottom'
+                }
+            });
+            $("#datetimepicker7").on("change.datetimepicker", function (e) {
+                $('#datetimepicker8').datetimepicker('minDate', e.date);
+            });
+            $("#datetimepicker8").on("change.datetimepicker", function (e) {
+                $('#datetimepicker7').datetimepicker('maxDate', e.date);
+            });
+        });
+        $("#rasterBtn").click(function () {
+            $.each(data2, function (i, val) {
+                if (val.fields.filedate >= $("#date1").val() && val.fields.filedate <= $("#date2").val()) {
+                    linkArr.push(val.fields.linkname)
+                }
+            })
+            getZip();
+        })
         addEventListener('load', (event) => {
             if (moment(yyyy + '-' + mm + '-' + dd).isBetween(yyyy + '-03-31', yyyy + '-10-31')) {
                 if (localStorage.getItem('#altModal') !== 'true') {
@@ -127,5 +217,97 @@
                 }
             }
         });
+
+        function urlToPromise(url) {
+            return new Promise(function (resolve, reject) {
+                JSZipUtils.getBinaryContent(url, function (err, data) {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(data);
+                    }
+                });
+            });
+        }
+
+        function getZip() {
+
+            resetMessage();
+            var zip = new JSZip();
+
+            // find every checked item
+            $.each(linkArr, function (i, val) {
+                var url = val;
+                var filename = url.replace(/.*\//g, "");
+                zip.file(filename, urlToPromise(url), {binary: true});
+            });
+
+            // when everything has been downloaded, we can trigger the dl
+            zip.generateAsync({type: "blob"}, function updateCallback(metadata) {
+                var msg = "progression : " + metadata.percent.toFixed(2) + " %";
+                if (metadata.currentFile) {
+                    msg += ", current file = " + metadata.currentFile;
+                }
+                showMessage(msg);
+                updatePercent(metadata.percent | 0);
+            })
+                .then(function callback(blob) {
+
+                    // see FileSaver.js
+                    saveAs(blob, "example.zip");
+
+                    showMessage("done !");
+                    resetMessage();
+                }, function (e) {
+                    showError(e);
+                });
+
+            return false;
+        };
+
+
+        /**
+         * Reset the message.
+         */
+        function resetMessage() {
+            $("#result")
+                .removeClass()
+                .text("");
+        }
+
+        /**
+         * show a successful message.
+         * @param {String} text the text to show.
+         */
+        function showMessage(text) {
+            resetMessage();
+            $("#result")
+                .addClass("alert alert-success")
+                .text(text);
+        }
+
+        /**
+         * show an error message.
+         * @param {String} text the text to show.
+         */
+        function showError(text) {
+            resetMessage();
+            $("#result")
+                .addClass("alert alert-danger")
+                .text(text);
+        }
+
+        /**
+         * Update the progress bar.
+         * @param {Integer} percent the current percent
+         */
+        function updatePercent(percent) {
+            $("#progress_bar").removeClass("hide")
+                .find(".progress-bar")
+                .attr("aria-valuenow", percent)
+                .css({
+                    width: percent + "%"
+                });
+        }
     </script>
 {% endblock content %}
