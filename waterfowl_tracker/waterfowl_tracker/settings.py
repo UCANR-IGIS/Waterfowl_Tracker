@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-pl9yeg-7j@qk9pzl3dx*2+iijsk9cl45idyw@ad1fp_54e%ua(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['3.142.133.188','127.0.0.1']
 
 # Application definition
 
@@ -117,6 +117,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = '/wftracker/site/public/static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
