@@ -28,14 +28,14 @@ from django.http import HttpResponse
 
 # Create your views here.
 def index(request):
-    min_date = FarmWaterfowlDensities.objects.earliest('date1').date1
-    max_date = FarmWaterfowlDensities.objects.latest('date1').date1
+    min_date = FarmWaterfowlDensities.objects.earliest('date1').date1.strftime('%B %d, %Y')
+    max_date = FarmWaterfowlDensities.objects.latest('date1').date1.strftime('%B %d, %Y')
     rasters = serializers.serialize("json", RasterLinks.objects.all())
     return render(request, 'index.html', {'rasters': rasters, 'max_date': max_date, 'min_date': min_date})
 
 def app(request):
-    min_date = FarmWaterfowlDensities.objects.earliest('date1').date1
-    max_date = FarmWaterfowlDensities.objects.latest('date1').date1
+    min_date = FarmWaterfowlDensities.objects.earliest('date1').date1.strftime('%B %d, %Y')
+    max_date = FarmWaterfowlDensities.objects.latest('date1').date1.strftime('%B %d, %Y')
     farms = serializers.serialize("json", FarmWaterfowlDensities.objects.filter(owner_id=request.user.id))
     rasters = serializers.serialize("json", RasterLinks.objects.all())
     return render(request, 'app.html', {'farms': farms, 'rasters': rasters, 'max_date': max_date, 'min_date': min_date})
@@ -169,7 +169,7 @@ def destroy(request, id):
 def editNotification(request, id):
     notification = Notification.objects.get(id=id)
     form = NotificationForm(instance=notification)
-    return render(request,'editnotification.html', {'form':form,'notification':notification})
+    return render(request, 'editnotification.html', {'form':form, 'notification':notification})
 def updateNotification(request, id):
     notification = Notification.objects.get(id=id)
     form = NotificationForm(request.POST, instance=notification)
