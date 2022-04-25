@@ -3,158 +3,171 @@
 {% block title %}Edit Notification{% endblock title %}
 
 {% block content %}
-<div class="col-md-12">
-  {{ form.media }}
-  <form method="POST" class="post-form" action="{% url 'updateNotification' notification.id %}">
-    <input type="hidden" id="owner_id" name="owner" value="{{ notification.owner_id }}">
-    {% csrf_token %}
-    <div class='row gx-0'>
-        <div class='col'>
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" value="True" id="alerts" name="alerts"
-                    {% if notification.alerts %} checked {% endif %}>
-                <label class="form-check-label" for="alerts">Email Alerts</label>
-            </div>
-        </div>
-    </div>
-    <div class='row gx-0'>
-        <div class='col'>
-            <label class="col-sm-2 col-form-label">Notification Name:</label>
-                    <textarea class="form-control" id="name" rows="1" name='name' data-role="tagsinput">{{ notification.name }}</textarea>
-        </div>
-    </div>
-    <div class='row gx-0'>
-        <div class='col-lg-4'>
-            <div class="card">
-                <div class="card-header">
-                    Density
-                </div>
-                <div class="card-body">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="True"
-                            id="low_dens" name="low_dens" {% if notification.low_dens %} checked {% endif %}>
-                        <label class="form-check-label" for="low_dens">
-                            Low Density
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="True"
-                            id="med_dens" name="med_dens" {% if notification.med_dens %} checked {% endif %}>
-                        <label class="form-check-label" for="med_dens">
-                            Medium Density
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="True"
-                            id="high_dens" name="high_dens" {% if notification.high_dens %} checked {% endif %}>
-                        <label class="form-check-label" for="high_dens">
-                            High Density
-                        </label>
-                    </div>
-                </div>
-                <div class="card-header">
-                    Report Interval
-                </div>
-                <div class="card-body">
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" value="daily" name="reportfreq" id="daily"
-                               {% if notification.reportfreq == 'daily' %} checked {% endif %}>
-                        <label class="form-check-label" for="daily">
-                            Daily
-                        </label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" value="weekly" name="reportfreq" id="weekly"
-                            {% if notification.reportfreq == 'weekly' %} checked {% endif %}>
-                        <label class="form-check-label" for="weekly">
-                            Weekly
-                        </label>
-                    </div>
-                    <hr>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" value="Always" name="interval" id="Always"
-                               {% if notification.interval == 'Always' %} checked {% endif %}>
-                        <label class="form-check-label" for="Always">
-                            Always
-                        </label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" value="Detect" name="interval" id="Detect"
-                            {% if notification.interval == 'Detect' %} checked {% endif %}>
-                        <label class="form-check-label" for="Detect">
-                            Only When Waterfowl Are Detected
-                        </label>
+    <div class="col-md-12">
+        {{ form.media }}
+        <form method="POST" class="post-form" action="{% url 'updateNotification' notification.id %}">
+            <input type="hidden" id="owner_id" name="owner" value="{{ notification.owner_id }}">
+            {% csrf_token %}
+            <div class='row px-2 py-2'>
+                <div class='col'>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" value="True" id="alerts" name="alerts"
+                                {% if notification.alerts %} checked {% endif %}>
+                        <label class="form-check-label" for="alerts">Email Alerts</label>
                     </div>
                 </div>
             </div>
-        </div>
+            <div class='row px-2 py-2'>
+                <div class='col'>
+                    <label class="col-sm-2 col-form-label">Notification Name:</label>
+                    <textarea class="form-control" id="name" rows="1" name='name'
+                              data-role="tagsinput">{{ notification.name }}</textarea>
+                </div>
+            </div>
+            <div class='row px-2 py-2'>
+                <div class='col-lg-4'>
+                    <div class="card">
+                        <div class="card-header">
+                            Density
+                        </div>
+                        <div class="card-body">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="True"
+                                       id="low_dens" name="low_dens" {% if notification.low_dens %} checked {% endif %}>
+                                <label class="form-check-label" for="low_dens">
+                                    Low Density
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="True"
+                                       id="med_dens" name="med_dens" {% if notification.med_dens %} checked {% endif %}>
+                                <label class="form-check-label" for="med_dens">
+                                    Medium Density
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="True"
+                                       id="high_dens" name="high_dens" {% if notification.high_dens %}
+                                       checked {% endif %}>
+                                <label class="form-check-label" for="high_dens">
+                                    High Density
+                                </label>
+                            </div>
+                        </div>
+                        <div class="card-header">
+                            Report Interval
+                        </div>
+                        <div class="card-body">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" value="daily" name="reportfreq" id="daily"
+                                        {% if notification.reportfreq == 'daily' %} checked {% endif %}>
+                                <label class="form-check-label" for="daily">
+                                    Daily
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" value="weekly" name="reportfreq"
+                                       id="weekly"
+                                        {% if notification.reportfreq == 'weekly' %} checked {% endif %}>
+                                <label class="form-check-label" for="weekly">
+                                    Weekly
+                                </label>
+                            </div>
+                            <hr>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" value="Always" name="interval" id="Always"
+                                        {% if notification.interval == 'Always' %} checked {% endif %}>
+                                <label class="form-check-label" for="Always">
+                                    Always
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" value="Detect" name="interval" id="Detect"
+                                        {% if notification.interval == 'Detect' %} checked {% endif %}>
+                                <label class="form-check-label" for="Detect">
+                                    Only When Waterfowl Are Detected
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <div class='col-lg-4'>
-            <div class="card">
-                <div class="card-header">
-                    Proximity
+                <div class='col-lg-4'>
+                    <div class="card">
+                        <div class="card-header">
+                            Proximity
+                        </div>
+                        <div class="card-body">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="True" id="on_prop" name="on_prop"
+                                        {% if notification.on_prop %} checked {% endif %}>
+                                <label class="form-check-label" for="on_prop">
+                                    On property
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="True" id="two_km" name="two_km"
+                                        {% if notification.two_km %} checked {% endif %}>
+                                <label class="form-check-label" for="two_km">
+                                    2km radius
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="True" id="five_km" name="five_km"
+                                        {% if notification.five_km %} checked {% endif %}>
+                                <label class="form-check-label" for="five_km">
+                                    5km radius
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="True" id="ten_km" name="ten_km"
+                                        {% if notification.ten_km %} checked {% endif %}>
+                                <label class="form-check-label" for="ten_km">
+                                    10km radius
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="True" id="on_prop" name="on_prop" {% if notification.on_prop %} checked {% endif %}>
-                        <label class="form-check-label" for="on_prop">
-                            On property
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="True" id="two_km" name="two_km" {% if notification.two_km %} checked {% endif %}>
-                        <label class="form-check-label" for="two_km">
-                            2km radius
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="True" id="five_km" name="five_km" {% if notification.five_km %} checked {% endif %}>
-                        <label class="form-check-label" for="five_km">
-                            5km radius
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="True" id="ten_km" name="ten_km" {% if notification.ten_km %} checked {% endif %}>
-                        <label class="form-check-label" for="ten_km">
-                            10km radius
-                        </label>
+                <div class='col-lg-4'>
+                    <div class="card">
+                        <div class="card-header">
+                            Locations
+                        </div>
+                        <div class="card-body">
+                            {% for farmset in user.farmloc_set.all %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="{{ farmset.id }}" id="farm"
+                                           name="farm"  {% for farms in notification.farm.all %}
+                                        {% if farmset.id == farms.id %} checked {% endif %}
+                                    {% endfor %}>
+                                    <label class="form-check-label" for="farm">
+                                        {{ farmset.name }}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class='col-lg-4'>
-            <div class="card">
-                <div class="card-header">
-                    Locations
-                </div>
-                <div class="card-body">
-                    {% for farmset in user.farmloc_set.all %}
-                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="{{ farmset.id }}" id="farm" name="farm"  {% for farms in notification.farm.all %}
-                                {% if farmset.id == farms.id %} checked {% endif %}
-                            {% endfor %}>
-                        <label class="form-check-label" for="farm">
-                            {{farmset.name}}
-                        </label>
+            <div class='row px-2 py-2'>
+                <div class='col'>
+                    <div class="card">
+                        <div class="card-header">
+                            Alert Emails
+                        </div>
+                        <div class="card-body">
+                            <label for="emails" class="form-label">Alert Emails</label>
+                            <textarea class="form-control" id="emails" rows="3" name='emails'
+                                      data-role="tagsinput">{{ notification.emails }}</textarea>
+                        </div>
                     </div>
-                    {% endfor %}
                 </div>
             </div>
-        </div>
-    </div>
-    <div class='row gx-0'>
-        <div class='col'>
-            <div class="card">
-                <div class="card-header">
-                    Alert Emails
-                </div>
-                <div class="card-body">
-                    <label for="emails" class="form-label">Alert Emails</label>
-                    <textarea class="form-control" id="emails" rows="3" name='emails' data-role="tagsinput">{{ notification.emails }}</textarea>
+            <div class='row px-2 py-2'>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
                 </div>
             </div>
-        </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Save Changes</button>
-  </form>
-  {% endblock content %}
+        </form>
+{% endblock content %}

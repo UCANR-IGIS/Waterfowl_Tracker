@@ -66,7 +66,7 @@
         #viewDiv {
             padding: 0;
             margin: 0;
-            height: 65vh;
+            height: 90vh;
             width: 100%;
         }
 
@@ -83,9 +83,19 @@
             height: 35vh;
             width: 100%;
             overflow-y: scroll;
+            overflow-x: hidden;
         }
 
-        .py-3 {
+        #dataDiv2 {
+            padding: 0;
+            margin: 0;
+            height: 10vh;
+            width: 100%;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+
+        .py-md-9 {
             padding: 0px !important;
         }
     </style>
@@ -107,8 +117,8 @@
 
 <body>
 <div class="container-fluid gx-0 h-100">
-    <div class="row h-100 gx-0">
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+    <div class="row flex-nowrap h-100 gx-0">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-2 bg-dark">
             <div class="h-100 d-flex flex-column">
                 <div class="row gx-0 flex-grow-1">
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
@@ -171,7 +181,7 @@
                 </div>
             </div>
         </div>
-        <div class="col py-3">
+        <div class="col md-9">
             {% block content %}{% endblock %}
         </div>
     </div>
