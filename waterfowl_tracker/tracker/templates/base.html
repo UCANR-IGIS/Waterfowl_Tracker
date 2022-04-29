@@ -34,6 +34,42 @@
             height: 100%;
         }
 
+        .rows3, .rows2, .rows1 {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+            overflow:hidden
+        }
+        .rows3 {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 4fr auto minmax(0px, 1fr);
+            gap: 0px 0px;
+            grid-auto-flow: row;
+            grid-template-areas: "map" "datechooser" "table";
+        }
+        .rows2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr auto;
+            gap: 0px 0px;
+            grid-auto-flow: row;
+            grid-template-areas: "map" "datechooser";
+        }
+        .rows1 {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr;
+            gap: 0px 0px;
+            grid-auto-flow: row;
+            grid-template-areas: "table";
+        }
+        .table{
+            overflow:auto;
+            overflow-x: hidden;
+        }
+
         .navbarli {
             background-color: #182c52 !important;
             font-size: 105%;
@@ -66,21 +102,21 @@
         #viewDiv {
             padding: 0;
             margin: 0;
-            height: 90vh;
+            /*height: 90vh;*/
             width: 100%;
         }
 
         #viewDiv2 {
             padding: 0;
             margin: 0;
-            height: 65vh;
+            /*height: 65vh;*/
             width: 100%;
         }
 
         #dataDiv {
             padding: 0;
             margin: 0;
-            height: 35vh;
+            /*height: 35vh;*/
             width: 100%;
             overflow-y: scroll;
             overflow-x: hidden;
@@ -89,9 +125,9 @@
         #dataDiv2 {
             padding: 0;
             margin: 0;
-            height: 10vh;
+            /*height: 10vh;*/
             width: 100%;
-            overflow-y: scroll;
+            overflow-y: hidden;
             overflow-x: hidden;
         }
 
