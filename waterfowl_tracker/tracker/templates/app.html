@@ -110,7 +110,8 @@
     <script src="https://js.arcgis.com/4.22/"></script>
 
     <script>
-        var data = JSON.parse('{{ farms|safe }}')
+
+        var data = {{ farms|safe }}
         var data2 = JSON.parse('{{ rasters|safe }}')
         var trHTML = ''
         var trHTML2 = ''
@@ -227,7 +228,7 @@
                 url: '{% url 'farm_json' %}',
                 title: "Farms"
             });
-            const geojsonLayer2 = new GeoJSONLayer({
+           const geojsonLayer2 = new GeoJSONLayer({
                 url: '{% url 'buffer_json' %}',
                 renderer: renderer,
                 definitionExpression: "dist1 <> 'OnFarm'",

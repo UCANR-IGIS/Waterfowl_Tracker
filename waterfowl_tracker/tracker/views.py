@@ -40,6 +40,13 @@ def app(request):
     rasters = serializers.serialize("json", RasterLinks.objects.all())
     return render(request, 'app.html', {'farms': farms, 'rasters': rasters, 'max_date': max_date, 'min_date': min_date})
 
+def appAdmin(request):
+    min_date = FarmWaterfowlDensities.objects.earliest('date1').date1.strftime('%B %d, %Y')
+    max_date = FarmWaterfowlDensities.objects.latest('date1').date1.strftime('%B %d, %Y')
+    farms = serializers.serialize("json", FarmWaterfowlDensities.objects.all())
+    rasters = serializers.serialize("json", RasterLinks.objects.all())
+    return render(request, 'appAdmin.html', {'farms': farms, 'rasters': rasters, 'max_date': max_date, 'min_date': min_date})
+
 def farm_json(request):
     farms_pnts = serializers.serialize('geojson', FarmLoc.objects.filter(owner=request.user.id),
                                        geometry_field='pnt',
@@ -48,6 +55,18 @@ def farm_json(request):
 
 def buffer_json(request):
     farms_buffers = serializers.serialize('geojson', FarmBuffer.objects.filter(owner_id=request.user.id),
+                                       geometry_field='geometry',
+                                       fields=('parent_id', 'dist1',))
+    return HttpResponse(farms_buffers, content_type='application/json')
+
+def farm_json_admin(request):
+    farms_pnts = serializers.serialize('geojson', FarmLoc.objects.all(),
+                                       geometry_field='pnt',
+                                       fields=('name',))
+    return HttpResponse(farms_pnts, content_type='application/json')
+
+def buffer_json_admin(request):
+    farms_buffers = serializers.serialize('geojson', FarmBuffer.objects.all(),
                                        geometry_field='geometry',
                                        fields=('parent_id', 'dist1',))
     return HttpResponse(farms_buffers, content_type='application/json')

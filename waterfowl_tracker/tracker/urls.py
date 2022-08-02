@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('app/', views.app, name='app'),
+    path('appAdmin/', views.appAdmin, name='appAdmin'),
     #path('farms/', views.farms, name='farms'),
     path('notification/', views.notifications, name='notification'),
     path('profile/', views.ProfileView.as_view(), name='profile'),
@@ -16,6 +17,8 @@ urlpatterns = [
     path('editNotification/<id>', views.editNotification, name='editNotification'),
     path('updateNotification/<id>', views.updateNotification, name='updateNotification'),
     path('deleteNotification/<id>', views.destroyNotification, name='deleteNotification'),
+    path('farm_json_admin/', views.farm_json_admin, name='farm_json_admin'),
+    path('buffer_json_admin/', views.buffer_json_admin, name='buffer_json_admin'),
     path('farm_json/', views.farm_json, name='farm_json'),
     path('buffer_json/', views.buffer_json, name='buffer_json')
 ]
