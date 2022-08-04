@@ -14,7 +14,8 @@ from django.db import transaction, connection
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.core import serializers
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 
 #@receiver(post_save, sender=FarmLoc)
 #def refresh_view(sender, **kwargs):
@@ -41,6 +42,8 @@ def app(request):
     return render(request, 'app.html', {'farms': farms, 'rasters': rasters, 'max_date': max_date, 'min_date': min_date})
 
 def appAdmin(request):
+    if not request.user.is_staff:
+        return HttpResponseRedirect(reverse('app'))
     min_date = FarmWaterfowlDensities.objects.earliest('date1').date1.strftime('%B %d, %Y')
     max_date = FarmWaterfowlDensities.objects.latest('date1').date1.strftime('%B %d, %Y')
     farms = serializers.serialize("json", FarmWaterfowlDensities.objects.all())
