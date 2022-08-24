@@ -53,7 +53,7 @@ def appAdmin(request):
 def farm_json(request):
     farms_pnts = serializers.serialize('geojson', FarmLoc.objects.filter(owner=request.user.id),
                                        geometry_field='pnt',
-                                       fields=('name',))
+                                       fields=('name', 'pk',))
     return HttpResponse(farms_pnts, content_type='application/json')
 
 def buffer_json(request):
@@ -65,7 +65,7 @@ def buffer_json(request):
 def farm_json_admin(request):
     farms_pnts = serializers.serialize('geojson', FarmLoc.objects.all(),
                                        geometry_field='pnt',
-                                       fields=('name',))
+                                       fields=('name', 'pk',))
     return HttpResponse(farms_pnts, content_type='application/json')
 
 def buffer_json_admin(request):

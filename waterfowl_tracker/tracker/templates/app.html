@@ -153,6 +153,7 @@
         var rastDate
         var rastSublayer
         var rastParam
+        let highlight;
 
 
         require([
@@ -235,6 +236,7 @@
             const geojsonLayer2 = new GeoJSONLayer({
                 url: '{% url 'buffer_json' %}',
                 renderer: renderer,
+                minScale: 3000000,
                 definitionExpression: "dist1 <> 'OnFarm'",
                 title: "Farm Perimeters"
             });
@@ -328,10 +330,21 @@
             });
 
             function zoomToFarm(farm) {
-                let query = geojsonLayer2.createQuery();
-                query.where = "parent_id = " + selFarm + "";
-                geojsonLayer2.queryExtent(query).then(function (results) {
-                    view.goTo(results.extent.expand(1.5));  // go to the extent of all the graphics in the layer view
+
+                view.whenLayerView(geojsonLayer).then(function (layerView) {
+                    let query = geojsonLayer2.createQuery();
+                    query.where = "parent_id = " + selFarm + "";
+                    let query2 = geojsonLayer.createQuery();
+                    query2.where = "pk = '" + selFarm + "'";
+                    geojsonLayer2.queryExtent(query).then(function (results) {
+                        view.goTo(results.extent.expand(1.5));  // go to the extent of all the graphics in the layer view
+                    });
+                    geojsonLayer.queryFeatures(query2).then(function (result) {
+                        if (highlight) {
+                            highlight.remove();
+                        }
+                        highlight = layerView.highlight(result.features);
+                    });
                 });
             }
 
